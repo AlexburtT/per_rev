@@ -1,3 +1,6 @@
+<script lang="ts">
+</script>
+
 <h1>Performance Review</h1>
 <p>
 	Посетите описание проекта на странице <a
@@ -5,3 +8,4 @@
 		>Performance Review</a
 	>
 </p>
+<a href="/login" class="btn">Начать</a>
