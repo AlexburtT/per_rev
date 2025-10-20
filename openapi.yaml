@@ -1,0 +1,121 @@
+openapi: 3.0.3
+info:
+    title: Performance Review API
+    version: 1.0.0
+servers:
+    - url: /api
+
+paths:
+    /cycles/current:
+        get:
+            summary: Текущий цикл пользователя
+            responses:
+                "200":
+                    description: Успешно
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    data:
+                                        $ref: "#/components/schemas/CycleWithRole"
+
+    /cycles/{cycleId}/goals:
+        get:
+            summary: Цели сотрудника
+            parameters:
+                - name: cycleId
+                  in: path
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    data:
+                                        type: array
+                                        items:
+                                            $ref: "#/components/schemas/Goal"
+
+        post:
+            summary: Сохранить цели
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                goals:
+                                    type: array
+                                    items:
+                                        $ref: "#/components/schemas/GoalInput"
+            responses:
+                "204":
+                    description: Сохранено
+
+components:
+    schemas:
+        CycleWithRole:
+            type: object
+            properties:
+                id:
+                    type: string
+                name:
+                    type: string
+                startDate:
+                    type: string
+                    format: date
+                endDate:
+                    type: string
+                    format: date
+                status:
+                    type: string
+                    enum: [active, closed]
+                role:
+                    type: string
+                    enum: [employee, reviewer, manager]
+
+        Goal:
+            type: object
+            properties:
+                id:
+                    type: string
+                title:
+                    type: string
+                description:
+                    type: string
+                expectedResult:
+                    type: string
+                deadline:
+                    type: string
+                    format: date
+                tasks:
+                    type: array
+                    items:
+                        type: string
+                    maxItems: 3
+
+        GoalInput:
+            type: object
+            properties:
+                title:
+                    type: string
+                description:
+                    type: string
+                expectedResult:
+                    type: string
+                deadline:
+                    type: string
+                    format: date
+                tasks:
+                    type: array
+                    items:
+                        type: string
+                    maxItems: 3
+            required: [title, expectedResult, deadline]
