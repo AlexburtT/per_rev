@@ -8,7 +8,7 @@
 	<title>Performance Review</title>
 </svelte:head>
 
-<Header />
+<Header childrenLinks={[{ href: "/ui", text: "Компоненты UI" }]} />
 <main class="app-main">
 	<slot />
 </main>
