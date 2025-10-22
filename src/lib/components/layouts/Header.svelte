@@ -2,6 +2,7 @@
 	//import ThemeToggle from "./theme-toggle.svelte";
 	import { page } from "$app/stores";
 	import logo from "$lib/assets/logo.svg";
+	import logoWink from "$lib/assets/logo-wink.svg";
 
 	type LinksProps = {
 		href: string;
@@ -14,6 +15,7 @@
 <header class="app-header">
 	<div class="app-container">
 		<a href="/">
+			<img src={logoWink} alt="Логотип Wink" class="logo" />
 			<img src={logo} alt="Логотип Performance Review" class="logo" />
 		</a>
 
@@ -37,17 +39,19 @@
 	.app-header {
 		width: 100%;
 		background: var(--pr-gradient);
+		margin-bottom: 1rem;
 
 		.app-container {
 			display: flex;
 			justify-content: space-between;
 			align-items: center;
-			padding: 1rem 0;
+			padding: 1.5rem 0;
 		}
 	}
 
 	.logo {
 		height: 3rem;
+		padding-right: 2rem;
 	}
 
 	.header-link {

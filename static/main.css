@@ -39,7 +39,7 @@
 :root {
 	/* Базовые цвета */
 	--pr-base-dark: var(--pr-color-110); /* Очень темный синий */
-	--pr-base-light: var(--pr-color-10); /* Белый */
+	--pr-base-light: var(--pr-color); /* Белый */
 	--pr-accent: var(--pr-color-40); /* Сине-зеленый акцент */
 	--pr-gradient: linear-gradient(
 		135deg,
@@ -47,6 +47,8 @@
 		var(--pr-base-dark) 100%
 	);
 	--pr-orange: #ff6b00;
+	--pr-grey-light: #d9d9d9;
+	--pr-grey-light-2: #f4f9fc;
 
 	/* Основные цвета */
 	--pr-primary-dark: var(--pr-color-90); /* Темно-синий */
@@ -84,8 +86,7 @@ body {
 	min-height: 100dvh;
 	display: grid;
 	grid-template-rows: auto 1fr auto;
-	align-items: center;
-	/*padding: 1rem;*/
+
 	color: var(--pr-base-dark);
 	background: var(--pr-base-light);
 	transition: color 0.5s, background-color 0.5s;
@@ -99,15 +100,9 @@ body {
 }
 
 .app-container {
-	max-width: 1440px;
+	width: 1440px;
 	margin: 0 auto;
-	padding-inline: 1.5rem;
-}
-
-.app-main {
-	display: grid;
-	place-items: center;
-	gap: 1rem;
+	/*padding-inline: 1.5rem;*/
 }
 
 /* Стили для контейнеров */
