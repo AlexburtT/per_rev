@@ -19,7 +19,7 @@ const config = {
 			//precompress: true
 		}),
 		paths: {
-			base: 'https://alexburtt.github.io/per_rev/'
+			base: '/alexburtt.github.io/per_rev'
 		}
 	}
 };
