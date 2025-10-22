@@ -1,0 +1,9 @@
+services:
+    app:
+        build: .
+        ports:
+            - "3000:3000"
+        restart: unless-stopped
+        # Если нужно — можно добавить volume для логов или статики (обычно не требуется для SPA)
+        # volumes:
+        #   - ./build:/app/public:ro
