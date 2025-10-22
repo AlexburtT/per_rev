@@ -17,7 +17,10 @@ const config = {
 			out: 'build',
 			fallback: 'index.html',
 			//precompress: true
-		})
+		}),
+		paths: {
+			base: 'https://alexburtt.github.io/per_rev/'
+		}
 	}
 };
 
