@@ -1,6 +1,7 @@
 <script lang="ts">
 	//import ThemeToggle from "./theme-toggle.svelte";
 	import { page } from "$app/stores";
+	import { resolve } from "$app/paths";
 	import logo from "$lib/assets/logo.svg";
 	import logoWink from "$lib/assets/logo-wink.svg";
 
@@ -14,7 +15,7 @@
 
 <header class="app-header">
 	<div class="app-container">
-		<a href="/">
+		<a href={resolve("/")}>
 			<img src={logoWink} alt="Логотип Wink" class="logo" />
 			<img src={logo} alt="Логотип Performance Review" class="logo" />
 		</a>
