@@ -1,5 +1,4 @@
 <script lang="ts">
-	import "$lib/assets/main.css";
 	import Footer from "$lib/components/layouts/Footer.svelte";
 	import Header from "$lib/components/layouts/Header.svelte";
 </script>
@@ -8,7 +7,14 @@
 	<title>Performance Review</title>
 </svelte:head>
 
-<Header childrenLinks={[{ href: "/ui", text: "Компоненты UI" }]} />
+<Header
+	childrenLinks={[
+		{ href: "/employee", text: "Я сотрудник" },
+		{ href: "/manager", text: "Я руководитель" },
+		{ href: "/reviewer", text: "Я коллега (респондент)" },
+		{ href: "/ui", text: "Компоненты UI" },
+	]}
+/>
 <main class="app-main">
 	<slot />
 </main>
