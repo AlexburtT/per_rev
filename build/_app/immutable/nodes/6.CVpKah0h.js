@@ -1,0 +1,1 @@
+import"../chunks/DsnmJJEf.js";import"../chunks/69_IOA4Y.js";import{l as m,m as p}from"../chunks/DjTaF8cf.js";var t=m("<h1>Страница для руководителя</h1>");function h(o){var r=t();p(o,r)}export{h as component};
