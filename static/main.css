@@ -105,13 +105,6 @@ body {
 	/*padding-inline: 1.5rem;*/
 }
 
-/* Стили для контейнеров */
-.container {
-	max-width: 1200px;
-	margin: 0 auto;
-	padding: 1rem;
-}
-
 /* Стили для печати */
 @media print {
 	body {
@@ -126,9 +119,19 @@ body {
 }
 
 /* Адаптивные стили */
-@media (max-width: 768px) {
+@media (max-width: 1440px) {
+	.app-container {
+		width: 1280px;
+	}
+
 	html {
 		font-size: 15px;
+	}
+}
+
+@media (max-width: 768px) {
+	html {
+		font-size: 13px;
 	}
 }
 
