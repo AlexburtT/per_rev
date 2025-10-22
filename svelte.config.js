@@ -20,9 +20,6 @@ const config = {
 		}),
 		paths: {
 			base: '/per_rev'
-		},
-		router: {
-			type: 'hash'
 		}
 	}
 };
