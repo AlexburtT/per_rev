@@ -1,1 +1,0 @@
-import"../chunks/DsnmJJEf.js";import"../chunks/69_IOA4Y.js";import{l as a,m as o,n as t}from"../chunks/DjTaF8cf.js";var p=a('<h1>Performance Review</h1> <p>Посетите описание проекта на странице <a href="https://project13530243.tilda.ws/#rec1074252496">Performance Review</a></p>',1);function i(e){var r=p();t(2),o(e,r)}export{i as component};
