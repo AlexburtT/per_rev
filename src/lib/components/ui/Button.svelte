@@ -1,16 +1,26 @@
 <script lang="ts">
-	export let variant: "primary" | "secondary" | "outline" = "primary";
-	export let disabled = false;
-	export let type: "button" | "submit" | "reset" = "button";
+	interface Props {
+		variant?: "primary" | "secondary" | "outline";
+		disabled?: boolean;
+		type?: "button" | "submit" | "reset";
+		title?: string;
+	}
+
+	let {
+		type = "button",
+		disabled = false,
+		variant = "primary",
+		title,
+	}: Props = $props();
 </script>
 
 <button
 	{type}
 	{disabled}
 	class="btn button--{variant} {disabled ? 'button--disabled' : ''}"
-	on:click
+	onclick={() => console.log("click")}
 >
-	<slot />
+	{title}
 </button>
 
 <style>
