@@ -20,8 +20,8 @@
 	><Card
 		title="Цели и задачи"
 		description="Здесь находятся ваши цели, всего сейчас 1. Вывести кол-во целей и их описание если возможно"
-	/></a
->
+	></Card>
+</a>
 
 <Card
 	title="Самооценка по целям"
@@ -36,34 +36,6 @@
 	description="Здесь находятся пройденные полностью Performance Review с вашим результатом и комментариями. Вывести общий бал, рекомендации"
 />
 
-<!--<p>
-	Цикл: {data.cycle.name} ({data.cycle.startDate} – {data.cycle.endDate})
-</p>
-
-{#if data.goals.length === 0}
-	<p>Цели ещё не заданы</p>
-{:else}
-	<h3>Ваши цели: ({data.goals.length})</h3>
-	{#each data.goals as goal}
-		<div class="goal-card">
-			<h4>🎯 {goal.title}</h4>
-			<p><strong>Описание:</strong> {goal.description}</p>
-			<p>
-				<strong>Ожидаемый результат:</strong>
-				{goal.expectedResult}
-			</p>
-			<p><strong>Срок:</strong> {goal.deadline}</p>
-			{#if goal.tasks.length > 0}
-				<ul>
-					{#each goal.tasks as task}
-						<li>✅ {task}</li>
-					{/each}
-				</ul>
-			{/if}
-		</div>
-	{/each}
-{/if}-->
-
 <style>
 	.info-user {
 		display: flex;
@@ -72,6 +44,6 @@
 		width: 100%;
 		margin-bottom: 1rem;
 		padding-bottom: 1rem;
-		border-bottom: 1px solid var(--pr-grey-light);
+		border-bottom: 1px solid var(--text-tertiary);
 	}
 </style>
