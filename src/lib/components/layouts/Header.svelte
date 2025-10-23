@@ -1,8 +1,10 @@
 <script lang="ts">
 	//import ThemeToggle from "./theme-toggle.svelte";
-	import { page } from "$app/stores";
+	import { page } from "$app/state";
 	import logo from "$lib/assets/logo.svg";
 	import logoWink from "$lib/assets/logo-wink.svg";
+
+	const currentPath = $derived(page.url.hash);
 
 	type LinksProps = {
 		href: string;
@@ -25,8 +27,7 @@
 					<a
 						class="header-link"
 						href={link.href}
-						class:active={$page.url.pathname === link.href}
-						>{link.text}</a
+						class:active={currentPath === link.href}>{link.text}</a
 					>
 				{/each}
 			</nav>
@@ -38,7 +39,7 @@
 <style>
 	.app-header {
 		width: 100%;
-		background: var(--pr-gradient);
+		background: var(--gradient);
 		margin-bottom: 1rem;
 
 		.app-container {
@@ -57,7 +58,7 @@
 	.header-link {
 		margin-left: 1rem;
 		font-weight: 500;
-		color: var(--pr-text);
+		color: var(--surface);
 	}
 
 	.header-link:hover {
@@ -65,13 +66,6 @@
 	}
 
 	.header-link.active {
-		color: var(--pr-orange);
-	}
-
-	/* Адаптивное позиционирование для экранов > 1200px */
-	@media (min-width: 1200px) {
-		.header-link {
-			margin-left: 2rem;
-		}
+		color: var(--warning);
 	}
 </style>

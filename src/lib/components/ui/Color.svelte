@@ -1,8 +1,9 @@
 <script>
 	const colors = {
 		primary: "var(--primary)",
-		"primary-light": "var(--primary-light)",
+		"primary-medium": "var(--primary-medium)",
 		"primary-dark": "var(--primary-dark)",
+		"primary-light": "var(--primary-light)",
 		success: "var(--success)",
 		warning: "var(--warning)",
 		danger: "var(--danger)",
@@ -14,6 +15,7 @@
 		surface: "var(--surface)",
 		divider: "var(--divider)",
 		disabled: "var(--disabled)",
+		gradient: "var(--gradient)",
 	};
 </script>
 

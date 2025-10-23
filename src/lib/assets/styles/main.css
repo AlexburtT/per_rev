@@ -2,7 +2,8 @@
 @import "./_reset.css";
 
 html {
-	font-size: 17px;
+	font-size: clamp(14px, 1.1vw + 0.8rem, 17px);
+	/* от 14px на мобильных до 17px на десктопах */
 	-webkit-text-size-adjust: 100%;
 	-webkit-tap-highlight-color: transparent;
 	/*color-scheme: light dark;*/
@@ -26,10 +27,42 @@ body {
 }
 
 .app-container {
-	width: 1440px;
-	margin: 0 auto;
-	/*padding-inline: 1.5rem;*/
+	width: 100%;
+	max-width: 1440px;
+	margin-inline: auto;
+	padding-inline: clamp(1rem, 5vw, 3rem);
 }
+
+.text-content {
+	max-width: 70ch;
+	line-height: 1.6;
+}
+
+button,
+input,
+textarea,
+select {
+	font: inherit;
+}
+
+.visually-hidden {
+	position: absolute !important;
+	width: 1px !important;
+	height: 1px !important;
+	padding: 0 !important;
+	margin: -1px !important;
+	overflow: hidden !important;
+	clip: rect(0, 0, 0, 0) !important;
+	white-space: nowrap !important;
+	border: 0 !important;
+}
+
+/* Ссылки - активная страница*/
+/*.header-link[aria-current="page"] {
+	color: var(--warning);
+	text-decoration: underline;
+	/* или любой другой акцент */
+/*}*/
 
 /* Стили для печати */
 @media print {
@@ -41,23 +74,6 @@ body {
 	* {
 		box-shadow: none !important;
 		text-shadow: none !important;
-	}
-}
-
-/* Адаптивные стили */
-@media (max-width: 1440px) {
-	.app-container {
-		width: 1280px;
-	}
-
-	html {
-		font-size: 15px;
-	}
-}
-
-@media (max-width: 768px) {
-	html {
-		font-size: 13px;
 	}
 }
 

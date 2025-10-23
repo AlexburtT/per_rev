@@ -8,3 +8,8 @@
 	scrollbar-color: var(--text-tertiary) transparent;
 	text-decoration: none;
 }
+
+a {
+	color: inherit;
+	text-decoration: none;
+}
