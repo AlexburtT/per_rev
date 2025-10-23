@@ -1,0 +1,25 @@
+:root {
+	/* Основной цвет */
+	--primary: #074591;
+	--primary-light: #1d67b3;
+	--primary-dark: #0a397a;
+
+	/* Статусные цвета */
+	--success: #417505;
+	--warning: #ff6b00;
+	--danger: #f20b27;
+
+	/* Фоны */
+	--bg: #f4f7fb; /* фон страницы */
+	--surface: #ffffff; /* фон карточек, модалок */
+	--divider: #ebebeb; /* линии, бордеры */
+
+	/* Текст */
+	--text: #4a4a4a;
+	--text-secondary: #767676;
+	--text-tertiary: #9b9b9b;
+	--text-disabled: #bababa;
+
+	/* Disabled / неактивные элементы */
+	--disabled: #bababa;
+}
