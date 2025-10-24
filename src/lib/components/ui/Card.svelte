@@ -1,16 +1,17 @@
 <script lang="ts">
-	import type { Component } from "svelte";
+	import Trello from "../icons/Trello.svelte";
 	interface Props {
 		title: string;
 		description: string;
-		icon?: Component<{ class?: string }>;
 	}
 
-	let { title, description, icon: Icon }: Props = $props();
+	let { title, description }: Props = $props();
 </script>
 
 <div class="card">
-	<div class="card-icon"></div>
+	<div class="card-icon">
+		<Trello />
+	</div>
 	<h1>{title}</h1>
 	<p>{description}</p>
 </div>
