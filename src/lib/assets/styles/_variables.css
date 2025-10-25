@@ -1,0 +1,31 @@
+:root {
+	/* Основной цвет */
+	--primary: #074591;
+	--primary-medium: #1d67b3;
+	--primary-light: #60a6f0;
+	--primary-dark: #0a397a;
+
+	/* Статусные цвета */
+	--success: #417505;
+	--warning: #ff6b00;
+	--danger: #f20b27;
+
+	/* Фоны */
+	--bg: #f4f7fb; /* фон страницы */
+	--surface: #ffffff; /* фон карточек, модалок */
+	--divider: #ebebeb; /* линии, бордеры */
+	--gradient: linear-gradient(
+		155deg,
+		var(--primary-light) 0%,
+		var(--primary-dark) 100%
+	);
+
+	/* Текст */
+	--text: #4a4a4a;
+	--text-secondary: #767676;
+	--text-tertiary: #9b9b9b;
+	--text-disabled: #bababa;
+
+	/* Disabled / неактивные элементы */
+	--disabled: #bababa;
+}

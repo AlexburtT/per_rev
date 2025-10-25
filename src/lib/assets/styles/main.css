@@ -1,0 +1,134 @@
+@import "./_variables.css";
+@import "./_reset.css";
+
+html {
+	font-size: clamp(14px, 1.1vw + 0.8rem, 17px);
+	/* от 14px на мобильных до 17px на десктопах */
+	-webkit-text-size-adjust: 100%;
+	-webkit-tap-highlight-color: transparent;
+	/*color-scheme: light dark;*/
+}
+
+body {
+	min-height: 100dvh;
+	display: grid;
+	grid-template-rows: auto 1fr auto;
+
+	color: var(--text);
+	background: var(--bg);
+	transition: color 0.5s, background-color 0.5s;
+	line-height: 1.3;
+	font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+		Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue",
+		sans-serif;
+	text-rendering: optimizeLegibility;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.app-container {
+	width: 100%;
+	max-width: 1440px;
+	margin-inline: auto;
+	padding-inline: clamp(1rem, 5vw, 3rem);
+}
+
+.text-content {
+	max-width: 70ch;
+	line-height: 1.6;
+}
+
+button,
+input,
+textarea,
+select {
+	font: inherit;
+}
+
+.visually-hidden {
+	position: absolute !important;
+	width: 1px !important;
+	height: 1px !important;
+	padding: 0 !important;
+	margin: -1px !important;
+	overflow: hidden !important;
+	clip: rect(0, 0, 0, 0) !important;
+	white-space: nowrap !important;
+	border: 0 !important;
+}
+
+/* Ссылки - активная страница*/
+/*.header-link[aria-current="page"] {
+	color: var(--warning);
+	text-decoration: underline;
+	/* или любой другой акцент */
+/*}*/
+
+/* Стили для печати */
+@media print {
+	body {
+		color: black;
+		background: white;
+	}
+
+	* {
+		box-shadow: none !important;
+		text-shadow: none !important;
+	}
+}
+
+/* Стили для accessibility */
+:focus-visible {
+	outline: 2px solid var(--color-primary);
+	outline-offset: 2px;
+}
+
+/* Стили для скринридеров */
+.sr-only {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	white-space: nowrap;
+	border: 0;
+}
+
+/* Стили для анимаций */
+.fade-in {
+	animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+		transform: translateY(10px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+/* Кнопки */
+.btn {
+	background-color: var(--pr-accent);
+	color: var(--pr-primary-dark);
+	padding: 0.5rem 3rem;
+	border: none;
+	border-radius: 0.5rem;
+	cursor: pointer;
+	font-weight: bold;
+	transition: all 0.2s ease;
+
+	&:hover {
+		/*transform: scale(1.05);*/
+		background-color: color-mix(
+			in oklch,
+			var(--pr-accent) 85%,
+			var(--pr-background) 15%
+		);
+	}
+}
