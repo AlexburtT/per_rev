@@ -1,6 +1,9 @@
 <script lang="ts">
+	import Dialog from "../layouts/Dialog.svelte";
 	import Button from "./Button.svelte";
 	import Input from "./Input.svelte";
+
+	let isModalOpen = $state(false);
 </script>
 
 <form class="form-field">
@@ -20,8 +23,20 @@
 	<Input name="dateStart" label="Начало реализации" type="date" />
 	<Input name="dateEnd" label="Начало реализации" type="date" />
 
-	<Button title="+ Добавить ключевую задачу" variant="secondary" />
+	<Button
+		title="+ Добавить ключевую задачу"
+		variant="secondary"
+		onClick={() => (isModalOpen = true)}
+	/>
 </form>
+
+<Dialog
+	open={isModalOpen}
+	title="Добавить цель"
+	onClose={() => (isModalOpen = false)}
+>
+	<h1>Im Dialog</h1>
+</Dialog>
 
 <style>
 	.form-field {

@@ -4,6 +4,7 @@
 		disabled?: boolean;
 		type?: "button" | "submit" | "reset";
 		title?: string;
+		onClick: () => {};
 	}
 
 	const {
@@ -11,12 +12,14 @@
 		disabled = false,
 		variant = "primary",
 		title,
+		onClick,
 	}: Props = $props();
 </script>
 
 <button
 	{type}
 	{disabled}
+	onclick={onClick}
 	class="btn {variant} {disabled ? 'btn--disabled' : ''}"
 >
 	{title}
