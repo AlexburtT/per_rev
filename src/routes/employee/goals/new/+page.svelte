@@ -4,8 +4,8 @@
 
 <Breadcrumbs
 	items={[
-		{ title: "Главная", href: "/#/employee" },
-		{ title: "Цели и задачи", href: "/#/employee/goals" },
+		{ title: "Главная", href: "#/employee" },
+		{ title: "Цели и задачи", href: "#/employee/goals" },
 		{ title: "Новая цель" },
 	]}
 />
