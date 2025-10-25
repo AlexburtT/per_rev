@@ -18,11 +18,11 @@
 		rows?: number; //только для textarea
 	}
 
-	const {
+	let {
 		name,
 		label,
 		placeholder,
-		value = "",
+		value = $bindable(""),
 		type = "text",
 		disabled = false,
 		required = false,
