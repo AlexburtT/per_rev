@@ -19,23 +19,15 @@
 	};
 </script>
 
-<div class="palette">
-	{#each Object.entries(colors) as [name, cssVar]}
-		<div class="color-item">
-			<div class="color-preview" style="background: {cssVar}"></div>
-			<span class="color-name">{name}</span>
-			<span class="color-value">{cssVar}</span>
-		</div>
-	{/each}
-</div>
+{#each Object.entries(colors) as [name, cssVar]}
+	<div class="color-item">
+		<div class="color-preview" style="background: {cssVar}"></div>
+		<span class="color-name">{name}</span>
+		<span class="color-value">{cssVar}</span>
+	</div>
+{/each}
 
 <style>
-	.palette {
-		display: grid;
-		grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-		gap: 16px;
-		padding: 24px;
-	}
 	.color-item {
 		display: flex;
 		flex-direction: column;

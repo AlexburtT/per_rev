@@ -6,7 +6,7 @@
 		title?: string;
 	}
 
-	let {
+	const {
 		type = "button",
 		disabled = false,
 		variant = "primary",
@@ -17,34 +17,33 @@
 <button
 	{type}
 	{disabled}
-	class="btn button--{variant} {disabled ? 'button--disabled' : ''}"
-	onclick={() => console.log("click")}
+	class="btn {variant} {disabled ? 'btn--disabled' : ''}"
 >
 	{title}
 </button>
 
 <style>
-	.button {
-		padding: 1rem 3rem;
-		border-radius: 1rem;
+	.btn {
+		padding: 0.5rem 3rem;
+		border-radius: 0.3rem;
 		font-weight: 500;
 		cursor: pointer;
 		border: 1px solid transparent;
 	}
-	.button.primary {
-		background-color: #3b82f6;
-		color: white;
+	.btn.primary {
+		background-color: var(--primary);
+		color: var(--surface);
 	}
-	.button.outline {
+	.btn.outline {
 		background: transparent;
-		border-color: #ccc;
-		color: #333;
+		border-color: var(--text-disabled);
+		color: var(--text);
 	}
-	.button.secondary {
-		background-color: #f3f4f6;
-		color: #333;
+	.btn.secondary {
+		background-color: var(--primary-light);
+		color: var(--divider);
 	}
-	.button--disabled {
+	.btn--disabled {
 		opacity: 0.6;
 		cursor: not-allowed;
 	}
