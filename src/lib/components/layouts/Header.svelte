@@ -16,7 +16,7 @@
 
 <header class="app-header">
 	<div class="app-container">
-		<a href="/">
+		<a href="#/">
 			<img src={logoWink} alt="Логотип Wink" class="logo" />
 			<img src={logo} alt="Логотип Performance Review" class="logo" />
 		</a>
