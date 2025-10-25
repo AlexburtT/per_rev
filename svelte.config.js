@@ -20,6 +20,10 @@ const config = {
 		}),
 		router: {
 			type: 'hash'
+		},
+		// Для Github Pages раскомментируйте следующую строку
+		paths: {
+			base: '/per_rev'
 		}
 	}
 };
