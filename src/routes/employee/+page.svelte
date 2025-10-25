@@ -7,13 +7,14 @@
 	let { data }: PageProps = $props();
 </script>
 
-<div class="info-user">
+<div class="nav">
 	<Breadcrumbs items={[{ title: "Главная" }]} />
-	<p>Мой отдел: {data.user.department}</p>
-	<p>Мой руководитель: Петров Сидор Иванович</p>
-	<p>Должность: JS - разработчик</p>
-	<p>Почта: {data.user.email}</p>
-	<p><strong>{data.user.fullName}</strong></p>
+	<div class="info-user">
+		<p>Отдел: {data.user.department}</p>
+		<p>Руководитель: Петров Сидор Иванович</p>
+		<p>Должность: JS - разработчик</p>
+		<p><strong>{data.user.fullName}</strong></p>
+	</div>
 </div>
 
 <a href="#/employee/goals"
@@ -36,18 +37,24 @@
 />
 <Card
 	icon="trendingUp"
-	title="Ваши результаты"
+	title="Результаты"
 	description="Здесь находятся пройденные полностью Performance Review с вашим результатом и комментариями. Вывести общий бал, рекомендации"
 />
 
 <style>
-	.info-user {
+	.nav {
 		display: flex;
-		justify-content: flex-end;
-		gap: 1rem;
-		width: 100%;
+		align-items: center;
 		margin-bottom: 1rem;
 		padding-bottom: 1rem;
 		border-bottom: 1px solid var(--text-tertiary);
+	}
+
+	.info-user {
+		display: flex;
+		justify-content: flex-end;
+		align-items: center;
+		gap: 1rem;
+		width: 100%;
 	}
 </style>

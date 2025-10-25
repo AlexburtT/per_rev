@@ -1,5 +1,6 @@
 @import "./_variables.css";
 @import "./_reset.css";
+@import "./_button.css";
 
 html {
 	font-size: clamp(14px, 1.1vw + 0.8rem, 17px);
@@ -16,7 +17,7 @@ body {
 
 	color: var(--text);
 	background: var(--bg);
-	transition: color 0.5s, background-color 0.5s;
+	transition: var(--transition);
 	line-height: 1.3;
 	font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
 		Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue",
@@ -27,6 +28,9 @@ body {
 }
 
 .app-container {
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
 	width: 100%;
 	max-width: 1440px;
 	margin-inline: auto;
@@ -109,26 +113,5 @@ select {
 	to {
 		opacity: 1;
 		transform: translateY(0);
-	}
-}
-
-/* Кнопки */
-.btn {
-	background-color: var(--pr-accent);
-	color: var(--pr-primary-dark);
-	padding: 0.5rem 3rem;
-	border: none;
-	border-radius: 0.5rem;
-	cursor: pointer;
-	font-weight: bold;
-	transition: all 0.2s ease;
-
-	&:hover {
-		/*transform: scale(1.05);*/
-		background-color: color-mix(
-			in oklch,
-			var(--pr-accent) 85%,
-			var(--pr-background) 15%
-		);
 	}
 }

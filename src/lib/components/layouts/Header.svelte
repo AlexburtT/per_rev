@@ -15,25 +15,23 @@
 </script>
 
 <header class="app-header">
-	<div class="app-container">
-		<a href="#/">
-			<img src={logoWink} alt="Логотип Wink" class="logo" />
-			<img src={logo} alt="Логотип Performance Review" class="logo" />
-		</a>
+	<a href="#/">
+		<img src={logoWink} alt="Логотип Wink" class="logo" />
+		<img src={logo} alt="Логотип Performance Review" class="logo" />
+	</a>
 
-		{#if childrenLinks}
-			<nav>
-				{#each childrenLinks as link}
-					<a
-						class="header-link"
-						href={link.href}
-						class:active={currentPath === link.href}>{link.text}</a
-					>
-				{/each}
-			</nav>
-		{/if}
-		<!--<ThemeToggle />-->
-	</div>
+	{#if childrenLinks}
+		<nav>
+			{#each childrenLinks as link}
+				<a
+					class="header-link"
+					href={link.href}
+					class:active={currentPath === link.href}>{link.text}</a
+				>
+			{/each}
+		</nav>
+	{/if}
+	<!--<ThemeToggle />-->
 </header>
 
 <style>
@@ -41,13 +39,10 @@
 		width: 100%;
 		background: var(--gradient);
 		margin-bottom: 1rem;
-
-		.app-container {
-			display: flex;
-			justify-content: space-between;
-			align-items: center;
-			padding: 1.5rem 0;
-		}
+		display: flex;
+		align-items: center;
+		justify-content: space-around;
+		padding: 1rem;
 	}
 
 	.logo {

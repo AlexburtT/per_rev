@@ -1,5 +1,6 @@
 <script lang="ts">
 	import Breadcrumbs from "$lib/components/layouts/Breadcrumbs.svelte";
+	import Form from "$lib/components/ui/Form.svelte";
 </script>
 
 <Breadcrumbs
@@ -10,3 +11,5 @@
 	]}
 />
 <h1>Новая цель</h1>
+
+<Form />
