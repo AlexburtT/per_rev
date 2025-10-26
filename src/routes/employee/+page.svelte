@@ -10,10 +10,10 @@
 <div class="nav">
 	<Breadcrumbs items={[{ title: "Главная" }]} />
 	<div class="info-user">
-		<p>Отдел: {data.user.department}</p>
+		<p>Отдел:</p>
 		<p>Руководитель: Петров Сидор Иванович</p>
 		<p>Должность: JS - разработчик</p>
-		<p><strong>{data.user.fullName}</strong></p>
+		<p><strong></strong></p>
 	</div>
 </div>
 
