@@ -22,14 +22,14 @@
 		name,
 		label,
 		placeholder,
-		value = $bindable(""),
+		value = "",
 		type = "text",
 		disabled = false,
 		required = false,
 		rows = 4,
 	}: Props = $props();
 
-	let internalValue = $state(value);
+	let dataValue = $state(value);
 </script>
 
 <label class="input">
@@ -45,7 +45,7 @@
 			{disabled}
 			{required}
 			{rows}
-			bind:value={internalValue}
+			bind:value={dataValue}
 			class="input__field input__field--textarea"
 		></textarea>
 	{:else}
@@ -55,7 +55,7 @@
 			{disabled}
 			{required}
 			{type}
-			bind:value={internalValue}
+			bind:value={dataValue}
 			class="input__field"
 		/>
 	{/if}
