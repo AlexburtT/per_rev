@@ -1,6 +1,10 @@
 <script lang="ts">
 	import logo from "$lib/assets/Wink_new.svg";
-	import { userStore, loadUsersList } from "$lib/stores/userStore.svelte";
+	import {
+		userStore,
+		loadUsersList,
+		clearUser,
+	} from "$lib/stores/userStore.svelte";
 
 	import Select from "../ui/Select.svelte";
 
@@ -34,7 +38,7 @@
 </script>
 
 <header class="app-header">
-	<a href="#/">
+	<a href="#/" onclick={() => clearUser()}>
 		<img src={logo} alt="Логотип Performance Review" class="logo" />
 	</a>
 

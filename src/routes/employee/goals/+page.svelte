@@ -28,9 +28,9 @@
 	]}
 />
 
-<h1>Мои цели</h1>
-
-<hr />
+<div class="conteiner_title">
+	<h1>Мои цели</h1>
+</div>
 
 <div class="goals-grid">
 	{#each goals as goal}

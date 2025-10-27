@@ -55,11 +55,13 @@ export const taskApi = {
 // --- Goals ---
 export const goalApi = {
 	getAll: () => getAll(STORES.GOALS),
+	getById: (id: string) => getOne(STORES.GOALS, id),
 	getByAuthor: (authorId: string) =>
 		getByIndex(STORES.GOALS, "byAuthor", authorId),
 	getByCycle: (cycleId: string) =>
 		getByIndex(STORES.GOALS, "byCycle", cycleId),
 	put: (goal: Goal) => put(STORES.GOALS, goal),
+	delete: (id: string) => del(STORES.GOALS, id),
 };
 
 // --- Peer Assignments ---
