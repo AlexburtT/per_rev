@@ -12,13 +12,7 @@
 	<title>Performance Review</title>
 </svelte:head>
 
-<Header
-	childrenLinks={[
-		{ href: "#/employee", text: "Я сотрудник" },
-		{ href: "#/manager", text: "Я руководитель" },
-		{ href: "#/ui", text: "Компоненты UI" },
-	]}
-/>
+<Header />
 
 <main class="app-main">
 	{#key page.url.pathname}

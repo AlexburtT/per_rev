@@ -9,20 +9,20 @@
 		label?: string;
 		value?: string;
 		options: Option[];
+		placeholder?: string;
 		disabled?: boolean;
 		required?: boolean;
 	}
 
-	const {
+	let {
 		name,
-		label,
-		value = "",
+		label = "",
+		value = $bindable(),
 		options,
+		placeholder,
 		disabled = false,
 		required = false,
-	} = $props();
-
-	let internalValue = $state(value);
+	}: Props = $props();
 </script>
 
 <label class="select">
@@ -31,13 +31,10 @@
 			>{label}{#if required}<span aria-hidden="true">*</span>{/if}</span
 		>
 	{/if}
-	<select
-		{name}
-		{disabled}
-		{required}
-		bind:value={internalValue}
-		class="select__field"
-	>
+	<select {name} {disabled} {required} bind:value class="select__field">
+		{#if placeholder}
+			<option value="">{placeholder}</option>
+		{/if}
 		{#each options as opt}
 			<option value={opt.value}>{opt.label}</option>
 		{/each}
