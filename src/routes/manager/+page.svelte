@@ -1,15 +1,13 @@
 <script lang="ts">
 	import { onMount } from "svelte";
-	import { userApi } from "$lib/db";
+	import * as api from "$lib/api";
 	import type { User } from "$lib/types/types";
 
 	let user = $state(<User | undefined>undefined);
 	let loading = $state(true);
 
 	onMount(async () => {
-		console.log("Запрашиваем emp1...");
-		const u = await userApi.getById("emp1");
-		console.log("Результат:", u);
+		const u = await api.users.getCurrentUser();
 		user = u;
 		loading = false;
 	});
