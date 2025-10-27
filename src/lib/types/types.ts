@@ -51,6 +51,7 @@ export interface Goal {
 	expectedResult: string;
 	deadline: string; // YYYY-MM-DD
 	taskIds: string[]; // ссылки на Task.id (до 3 задач)
+	tasks: Task[]; // для удобства
 	authorId: string; // User.id — кто создал цель
 	cycleId: string; // Cycle.id
 	status: GoalStatus;

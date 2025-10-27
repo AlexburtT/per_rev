@@ -1,7 +1,7 @@
 // src/lib/db/mockData.ts
 
 import { userApi, cycleApi, taskApi, goalApi, peerAssignmentApi } from ".";
-import type { User, Cycle, Task, Goal, PeerAssignment } from "../types";
+import type { User, Cycle, Task, Goal, PeerAssignment } from "../types/types";
 
 // === Вспомогательные утилиты ===
 

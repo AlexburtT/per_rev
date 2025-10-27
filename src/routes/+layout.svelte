@@ -4,6 +4,13 @@
 	import Footer from "$lib/components/layouts/Footer.svelte";
 	import Header from "$lib/components/layouts/Header.svelte";
 	import { fade } from "svelte/transition";
+	import { initMockData } from "$lib/db/mockData";
+	import { onMount } from "svelte";
+
+	// Инициализируем базу при первом запуске
+	onMount(async () => {
+		await initMockData();
+	});
 
 	let { children } = $props();
 </script>
