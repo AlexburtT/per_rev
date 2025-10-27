@@ -17,7 +17,7 @@
 			!userStore.currentUser ||
 			userStore.currentUser.role !== "employee"
 		) {
-			goto("/");
+			goto("#/");
 		}
 	});
 
