@@ -1,39 +1,57 @@
 <script lang="ts">
-	//import ThemeToggle from "./theme-toggle.svelte";
-	import { page } from "$app/state";
-	import logo from "$lib/assets/logo.svg";
-	import logoWink from "$lib/assets/logo-wink.svg";
+	import logo from "$lib/assets/Wink_new.svg";
+	import {
+		userStore,
+		loadUsersList,
+		clearUser,
+	} from "$lib/stores/userStore.svelte";
 
-	const currentPath = $derived(page.url.hash);
+	import Select from "../ui/Select.svelte";
 
-	type LinksProps = {
-		href: string;
-		text: string;
-	};
+	// Загружаем список пользователей для переключения (только для демо)
+	$effect(() => {
+		loadUsersList();
+	});
 
-	let { childrenLinks }: { childrenLinks?: LinksProps[] } = $props();
+	// Локальное значение для bind
+	let selectedUserId = $state("");
+
+	// Синхронизируем selectedUserId с userStore.currentUser
+	$effect(() => {
+		selectedUserId = userStore.currentUser?.id ?? "";
+	});
+
+	// При выборе — обновляем currentUser
+	$effect(() => {
+		if (selectedUserId) {
+			const user = userStore.userList.find(
+				(u) => u.id === selectedUserId
+			);
+			if (user) {
+				userStore.currentUser = user;
+				console.log("Выбран:", user.fullName);
+			}
+		} else {
+			userStore.currentUser = undefined;
+		}
+	});
 </script>
 
 <header class="app-header">
-	<div class="app-container">
-		<a href="#/">
-			<img src={logoWink} alt="Логотип Wink" class="logo" />
-			<img src={logo} alt="Логотип Performance Review" class="logo" />
-		</a>
+	<a href="#/" onclick={() => clearUser()}>
+		<img src={logo} alt="Логотип Performance Review" class="logo" />
+	</a>
 
-		{#if childrenLinks}
-			<nav>
-				{#each childrenLinks as link}
-					<a
-						class="header-link"
-						href={link.href}
-						class:active={currentPath === link.href}>{link.text}</a
-					>
-				{/each}
-			</nav>
-		{/if}
-		<!--<ThemeToggle />-->
-	</div>
+	<!-- Селектор пользователя -->
+	<Select
+		name="select_user"
+		placeholder="— Выберите пользователя —"
+		bind:value={selectedUserId}
+		options={userStore.userList.map((u) => ({
+			value: u.id,
+			label: `${u.fullName} ${u.role}`,
+		}))}
+	/>
 </header>
 
 <style>
@@ -41,31 +59,14 @@
 		width: 100%;
 		background: var(--gradient);
 		margin-bottom: 1rem;
-
-		.app-container {
-			display: flex;
-			justify-content: space-between;
-			align-items: center;
-			padding: 1.5rem 0;
-		}
+		display: flex;
+		align-items: center;
+		justify-content: space-around;
+		padding: 1rem;
 	}
 
 	.logo {
 		height: 3rem;
 		padding-right: 2rem;
-	}
-
-	.header-link {
-		margin-left: 1rem;
-		font-weight: 500;
-		color: var(--surface);
-	}
-
-	.header-link:hover {
-		text-decoration: underline;
-	}
-
-	.header-link.active {
-		color: var(--warning);
 	}
 </style>

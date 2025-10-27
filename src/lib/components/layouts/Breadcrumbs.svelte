@@ -1,5 +1,14 @@
 <script lang="ts">
-	export let items: { title: string; href?: string }[] = [];
+	interface BreadcrumbItem {
+		title: string;
+		href?: string;
+	}
+
+	interface Props {
+		items: BreadcrumbItem[];
+	}
+
+	const { items }: Props = $props();
 </script>
 
 <nav aria-label="Хлебные крошки" class="breadcrumbs">
@@ -21,13 +30,13 @@
 
 <style>
 	.breadcrumbs {
-		display: flex;
+		/*display: flex;
 		align-items: center;
 		flex-wrap: wrap;
-		gap: 0.25rem;
+		gap: 0.25rem;*/
 		font-size: 0.875rem;
 		color: var(--text-tertiary);
-		margin-bottom: 1.5rem;
+		/*margin-bottom: 1.5rem;*/
 	}
 
 	.breadcrumbs__separator {
