@@ -22,6 +22,7 @@ import type {
 	PotentialAssessment,
 	EmployeeReview,
 } from "$lib/types/types";
+import { getById } from "$lib/api/goals";
 
 // --- Users ---
 export const userApi = {
@@ -44,12 +45,21 @@ export const cycleApi = {
 // --- Tasks ---
 export const taskApi = {
 	getAll: () => getAll(STORES.TASKS),
+	getById: (id: string) => getOne(STORES.TASKS, id),
 	getByAssignedTo: (userId: string) =>
 		getByIndex(STORES.TASKS, "byAssignedTo", userId),
 	getByDepartment: (dept: string) =>
 		getByIndex(STORES.TASKS, "byDepartment", dept),
 	put: (task: Task) => put(STORES.TASKS, task),
 	delete: (id: string) => del(STORES.TASKS, id),
+	// Новый метод: загрузка нескольких задач по ID
+	getByIds: async (ids: string[]): Promise<Task[]> => {
+		if (ids.length === 0) return [];
+		const tasks = await Promise.all(
+			ids.map((id) => getOne(STORES.TASKS, id))
+		);
+		return tasks.filter((task): task is Task => task !== undefined);
+	},
 };
 
 // --- Goals ---

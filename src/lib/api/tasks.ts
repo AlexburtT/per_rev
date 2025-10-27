@@ -15,3 +15,11 @@ export async function createTask(task: Omit<Task, "id">) {
 	await taskApi.put({ ...task, id, createdAt: new Date().toISOString() });
 	return id;
 }
+
+export async function getById(taskId: string): Promise<Task | undefined> {
+	return await taskApi.getById(taskId);
+}
+
+export async function getByIds(taskIds: string[]): Promise<Task[]> {
+	return await taskApi.getByIds(taskIds);
+}
