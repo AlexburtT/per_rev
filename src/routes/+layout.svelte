@@ -6,10 +6,12 @@
 	import { fade } from "svelte/transition";
 	import { initMockData } from "$lib/db/mockData";
 	import { onMount } from "svelte";
+	import { loadUsersList } from "$lib/stores/userStore.svelte";
 
 	// Инициализируем базу при первом запуске
 	onMount(async () => {
 		await initMockData();
+		await loadUsersList();
 	});
 
 	let { children } = $props();

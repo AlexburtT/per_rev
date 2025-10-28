@@ -1,57 +1,17 @@
 <script lang="ts">
 	import logo from "$lib/assets/Wink_new.svg";
-	import {
-		userStore,
-		loadUsersList,
-		clearUser,
-	} from "$lib/stores/userStore.svelte";
+	import { clearUser } from "$lib/stores/userStore.svelte";
 
-	import Select from "../ui/Select.svelte";
-
-	// Загружаем список пользователей для переключения (только для демо)
-	$effect(() => {
-		loadUsersList();
-	});
-
-	// Локальное значение для bind
-	let selectedUserId = $state("");
-
-	// Синхронизируем selectedUserId с userStore.currentUser
-	$effect(() => {
-		selectedUserId = userStore.currentUser?.id ?? "";
-	});
-
-	// При выборе — обновляем currentUser
-	$effect(() => {
-		if (selectedUserId) {
-			const user = userStore.userList.find(
-				(u) => u.id === selectedUserId
-			);
-			if (user) {
-				userStore.currentUser = user;
-				console.log("Выбран:", user.fullName);
-			}
-		} else {
-			userStore.currentUser = undefined;
-		}
-	});
+	let { breadcrumbs } = $props();
 </script>
 
 <header class="app-header">
-	<a href="#/" onclick={() => clearUser()}>
+	<a href="/" onclick={() => clearUser()}>
 		<img src={logo} alt="Логотип Performance Review" class="logo" />
 	</a>
-
-	<!-- Селектор пользователя -->
-	<Select
-		name="select_user"
-		placeholder="— Выберите пользователя —"
-		bind:value={selectedUserId}
-		options={userStore.userList.map((u) => ({
-			value: u.id,
-			label: `${u.fullName} ${u.role}`,
-		}))}
-	/>
+	{#if breadcrumbs}
+		{@render breadcrumbs()}
+	{/if}
 </header>
 
 <style>
