@@ -8,6 +8,10 @@
 	const { goalsWithTasks: goals } = data;
 </script>
 
+<svelte:head>
+	<title>Главная</title>
+</svelte:head>
+
 <Breadcrumbs items={employeeBreadcrumbs(page.url.pathname)} />
 
 <!--<Breadcrumbs

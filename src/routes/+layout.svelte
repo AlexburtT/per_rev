@@ -17,10 +17,6 @@
 	let { children } = $props();
 </script>
 
-<svelte:head>
-	<title>Performance Review</title>
-</svelte:head>
-
 <Header />
 
 <main class="app-main">

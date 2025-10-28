@@ -47,6 +47,10 @@
 	});
 </script>
 
+<svelte:head>
+	<title>Performance Review</title>
+</svelte:head>
+
 {#if userStore.currentUser}
 	<p>Перенаправление...</p>
 {:else}
