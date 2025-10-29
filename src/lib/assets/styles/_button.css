@@ -1,0 +1,30 @@
+.btn {
+	width: 100%;
+	padding: 0.5rem 3rem;
+	border-radius: 0.3rem;
+	font-weight: 500;
+	cursor: pointer;
+	border: 1px solid transparent;
+	transition: var(--transition);
+}
+.btn.primary {
+	background-color: var(--primary);
+	color: var(--surface);
+}
+.btn.outline {
+	background: transparent;
+	border-color: var(--text-disabled);
+	color: var(--text);
+}
+.btn.secondary {
+	background-color: var(--primary-light);
+	color: var(--divider);
+}
+.btn--disabled {
+	opacity: 0.6;
+	cursor: not-allowed;
+}
+
+.btn:hover {
+	background-color: var(--primary-medium);
+}

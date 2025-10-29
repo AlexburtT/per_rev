@@ -7,3 +7,11 @@
 		</p>
 	</div>
 </footer>
+
+<style>
+	.app-footer {
+		padding: 1rem;
+		text-align: center;
+		background: var(--pr-gradient);
+	}
+</style>

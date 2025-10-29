@@ -1,0 +1,192 @@
+:root {
+	--pr-color: oklch(
+		0.9937308520037573 0.02123940829202764 185.66550866763646
+	);
+	--pr-color-10: oklch(
+		0.9937308520037573 0.04123940829202764 209.66550866763646
+	);
+	--pr-color-20: oklch(
+		0.8936533725339356 0.10034880021557632 207.4015714738118
+	);
+	--pr-color-30: oklch(
+		0.8078992777912033 0.13273678380486276 205.94313651001954
+	);
+	--pr-color-40: oklch(
+		0.7367970507267264 0.12113296741280412 205.90502455118
+	);
+	--pr-color-50: oklch(
+		0.6818693953661772 0.11212147403210596 206.27246969653288
+	);
+	--pr-color-60: oklch(
+		0.6074789769529675 0.09998337248899092 206.2748562883827
+	);
+	--pr-color-70: oklch(
+		0.5241859787505111 0.08611376962852164 205.4261195774893
+	);
+	--pr-color-80: oklch(
+		0.4314333984238395 0.07076374508702202 205.66687696789506
+	);
+	--pr-color-90: oklch(
+		0.3331070523025938 0.05497263810116829 205.98465557814396
+	);
+	--pr-color-100: oklch(
+		0.23061517271001752 0.038441374970610905 206.47834321324228
+	);
+	--pr-color-110: oklch(
+		0.14507821655810843 0.028020509715143707 203.42499819883938
+	);
+}
+:root {
+	/* Базовые цвета */
+	--pr-base-dark: var(--pr-color-110); /* Очень темный синий */
+	--pr-base-light: var(--pr-color); /* Белый */
+	--pr-accent: var(--pr-color-40); /* Сине-зеленый акцент */
+	--pr-gradient: linear-gradient(
+		135deg,
+		var(--pr-accent) 0%,
+		var(--pr-base-dark) 100%
+	);
+	--pr-orange: #ff6b00;
+	--pr-grey-light: #d9d9d9;
+	--pr-grey-light-2: #f4f9fc;
+
+	/* Основные цвета */
+	--pr-primary-dark: var(--pr-color-90); /* Темно-синий */
+	--pr-secondary: oklch(0.35 0.015 216); /* Средний синий */
+
+	--pr-card: oklch(0.18 0.01 216); /* Фон карточек */
+	--pr-text: oklch(0.95 0.005 216); /* Светлый текст */
+	--pr-primary-light: var(--pr-color); /* Вторичный текст */
+
+	/* Акцентные элементы */
+	--pr-success: oklch(0.6 0.02 140); /* Зеленовато-зеленый */
+	--pr-warning: oklch(0.65 0.025 60); /* Желтый */
+	--pr-danger: oklch(0.5 0.03 30); /* Красный */
+}
+
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	scrollbar-width: thin;
+	scrollbar-color: var(--color-primary) transparent;
+	text-decoration: none;
+}
+
+html {
+	font-size: 17px;
+	-webkit-text-size-adjust: 100%;
+	-webkit-tap-highlight-color: transparent;
+	color-scheme: light dark;
+}
+
+body {
+	min-height: 100dvh;
+	display: grid;
+	grid-template-rows: auto 1fr auto;
+
+	color: var(--pr-base-dark);
+	background: var(--pr-base-light);
+	transition: color 0.5s, background-color 0.5s;
+	line-height: 1.3;
+	font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+		Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue",
+		sans-serif;
+	text-rendering: optimizeLegibility;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.app-container {
+	width: 1440px;
+	margin: 0 auto;
+	/*padding-inline: 1.5rem;*/
+}
+
+/* Стили для печати */
+@media print {
+	body {
+		color: black;
+		background: white;
+	}
+
+	* {
+		box-shadow: none !important;
+		text-shadow: none !important;
+	}
+}
+
+/* Адаптивные стили */
+@media (max-width: 1440px) {
+	.app-container {
+		width: 1280px;
+	}
+
+	html {
+		font-size: 15px;
+	}
+}
+
+@media (max-width: 768px) {
+	html {
+		font-size: 13px;
+	}
+}
+
+/* Стили для accessibility */
+:focus-visible {
+	outline: 2px solid var(--color-primary);
+	outline-offset: 2px;
+}
+
+/* Стили для скринридеров */
+.sr-only {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	white-space: nowrap;
+	border: 0;
+}
+
+/* Стили для анимаций */
+.fade-in {
+	animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+		transform: translateY(10px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+/* Кнопки */
+.btn {
+	background-color: var(--pr-accent);
+	color: var(--pr-primary-dark);
+	padding: 0.5rem 3rem;
+	border: none;
+	border-radius: 0.5rem;
+	cursor: pointer;
+	font-weight: bold;
+	transition: all 0.2s ease;
+
+	&:hover {
+		/*transform: scale(1.05);*/
+		background-color: color-mix(
+			in oklch,
+			var(--pr-accent) 85%,
+			var(--pr-background) 15%
+		);
+	}
+}

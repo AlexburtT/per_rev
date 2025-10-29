@@ -1,26 +1,88 @@
 <script lang="ts">
+	import { goto } from "$app/navigation";
+
+	import { userStore, loadUsersList } from "$lib/stores/userStore.svelte";
+
+	import Select from "$lib/components/ui/Select.svelte";
+
+	// Загружаем список пользователей для переключения (только для демо)
+	$effect(() => {
+		if (userStore.userList.length === 0) {
+			loadUsersList();
+		}
+	});
+
+	// Локальное значение для bind
+	let selectedUserId = $state("");
+
+	// Синхронизируем selectedUserId с userStore.currentUser
+	$effect(() => {
+		selectedUserId = userStore.currentUser?.id ?? "";
+	});
+
+	// При выборе — обновляем currentUser
+	$effect(() => {
+		if (selectedUserId) {
+			const user = userStore.userList.find(
+				(u) => u.id === selectedUserId
+			);
+			if (user) {
+				userStore.currentUser = user;
+				console.log("Выбран:", user.fullName);
+			}
+		} else {
+			userStore.currentUser = undefined;
+		}
+	});
+
+	// Редирект при выборе пользователя
+	$effect(() => {
+		if (userStore.currentUser) {
+			if (userStore.currentUser.role === "manager") {
+				goto("#/manager");
+			} else {
+				goto("#/employee");
+			}
+		}
+	});
 </script>
 
-<h1>Performance Review</h1>
-<p>
-	Посетите описание проекта на странице <a
-		href="https://project13530243.tilda.ws/#rec1074252496"
-		>Performance Review</a
-	>
-</p>
-<p>Выберите роль для входа (без пароля):</p>
+<svelte:head>
+	<title>Performance Review</title>
+</svelte:head>
 
-<div class="role-grid">
-	<a href="/employee" class="btn">Я сотрудник</a>
-	<a href="/manager" class="btn">Я руководитель</a>
-	<a href="/reviewer" class="btn">Я коллега (респондент)</a>
-</div>
+{#if userStore.currentUser}
+	<p>Перенаправление...</p>
+{:else}
+	<h1>Performance Review</h1>
+	<p>
+		Посетите описание проекта на странице <a
+			href="https://project13530243.tilda.ws/#rec1074252496"
+			class="link">Performance Review</a
+		>
+	</p>
+	<p>Для тестирования функционала выберите пользователя:</p>
+	<!-- Селектор пользователя -->
+	<Select
+		name="select_user"
+		placeholder="— Выберите пользователя —"
+		bind:value={selectedUserId}
+		options={userStore.userList.map((u) => ({
+			value: u.id,
+			label: `${u.fullName} ${u.role}`,
+		}))}
+	/>
+
+	<small
+		>*/ В последующем это страница входа с формой (авторизация и
+		аунтефикация)</small
+	>
+{/if}
 
 <style>
-	.role-grid {
-		display: flex;
-		gap: 1rem;
-		flex-wrap: wrap;
-		margin-top: 1.5rem;
+	.link {
+		color: var(--primary-medium);
+		font-weight: 500;
+		text-decoration: underline;
 	}
 </style>

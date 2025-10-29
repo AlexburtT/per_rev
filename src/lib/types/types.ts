@@ -1,25 +1,50 @@
 // src/lib/types.ts
 
-export type UserRole = "employee" | "reviewer" | "manager" | "hr";
+export type UserRole = "employee" | "manager" | "hr";
 
 export interface User {
 	id: string;
 	email: string;
 	fullName: string;
 	role: UserRole;
-	department?: string;
-	managerId?: string;
+	department: string; // ← сделаем обязательным, т.к. логика завязана на отдел
+	specialization?: string; // например, "DevOps", "Recruiting"
+	managerId?: string; // ID руководителя (если есть)
 }
 
-// === Циклы и цели ===
+// === Циклы оценки===
+export type CycleStatus = "active" | "closed";
 
 export interface Cycle {
 	id: string;
 	name: string;
 	startDate: string; // ISO date
 	endDate: string;
-	status: "active" | "closed";
+	status: CycleStatus;
 }
+
+// === Задачи (назначает руководитель) ===
+
+export type TaskStatus = "planned" | "in-progress" | "completed" | "cancelled";
+
+export interface Task {
+	id: string;
+	title: string;
+	description?: string;
+	expectedResult?: string;
+	assignedTo: string; // User.id
+	assignedBy: string; // User.id (руководитель)
+	department: string; // отдел, к которому относится задача
+	specialization?: string; // специализация (опционально)
+	status: TaskStatus;
+	createdAt: string; // ISO
+	completedAt?: string; // ISO
+	deadline: string; // YYYY-MM-DD
+}
+
+// === Цели (пишет сотрудник) ===
+
+export type GoalStatus = "draft" | "submitted" | "reviewed";
 
 export interface Goal {
 	id: string;
@@ -27,45 +52,79 @@ export interface Goal {
 	description: string;
 	expectedResult: string;
 	deadline: string; // YYYY-MM-DD
-	tasks: string[]; // до 3 задач
+	taskIds: string[]; // ссылки на Task.id (до 3 задач)
+	tasks: Task[]; // для удобства
+	authorId: string; // User.id — кто создал цель
+	cycleId: string; // Cycle.id
+	status: GoalStatus;
+	createdAt: string; // ISO
 }
 
 // === Самооценка ===
 
+export type SelfReviewStatus = "draft" | "submitted";
+
 export interface SelfReview {
-	goalId: string;
+	id: string;
+	employeeId: string; // User.id
+	cycleId: string; // Cycle.id
+	goalId: string; // Goal.id
 	resultDescription: string;
 	personalContribution: string;
 	learnings: string;
 	improvements: string;
 	collaborationScore: number; // 0–10
 	satisfactionScore: number; // 0–10
-	status: "draft" | "submitted";
+	status: SelfReviewStatus;
+	submittedAt?: string; // ISO
 }
 
-// === Оценка от респондента ===
+// === Назначение оценки коллег (Peer Assignment) ===
+
+export type PeerAssignmentStatus = "pending" | "completed" | "skipped";
+
+export interface PeerAssignment {
+	id: string;
+	cycleId: string; // Cycle.id
+	reviewerId: string; // User.id — кто оценивает
+	employeeId: string; // User.id — кого оценивают
+	status: PeerAssignmentStatus;
+	assignedAt: string; // ISO
+	completedAt?: string; // ISO
+}
+
+// === Оценка коллеги (Peer Review) ===
 
 export interface PeerReview {
-	taskId: string;
+	id: string;
+	assignmentId: string; // PeerAssignment.id
+	taskId: string; // Task.id — по какой задаче оценка
 	achievementScore: number; // 0–10
 	qualitiesComment: string;
 	collaborationScore: number; // 0–10
 	improvementSuggestions: string;
+	submittedAt: string; // ISO
 }
 
 // === Оценка руководителя ===
 
+export type FinalRating = 0 | 1 | 2 | 3; // 0=нет, 1=низкий, 2=хороший, 3=сверх
+
 export interface ManagerReview {
-	employeeId: string;
+	id: string;
+	managerId: string; // User.id
+	employeeId: string; // User.id
+	cycleId: string; // Cycle.id
 	achievementScore: number; // 0–10
 	qualitiesComment: string;
 	personalContribution: string;
 	collaborationScore: number; // 0–10
 	improvements: string;
-	finalRating: number; // 0–10 → 0=нет, 1=низкий, 2=хороший, 3=сверх
+	finalRating: FinalRating;
+	submittedAt: string; // ISO
 }
 
-// === Потенциал ===
+// === Оценка потенциала (обычно от HR или руководителя) ===
 
 export type ProfessionalQuality =
 	| "responsibility"
@@ -80,20 +139,28 @@ export type PersonalQuality =
 	| "sharesInfoPromptly"
 	| "structuresWork";
 
+export type DevelopmentDesire = "proactive" | "needsHelp" | "unsure" | "no";
+export type SuccessorReadiness = "1-2y" | "3y" | "3+y";
+
 export interface PotentialAssessment {
+	id: string;
+	employeeId: string; // User.id
+	cycleId: string; // Cycle.id
+	assessorId: string; // User.id (HR или руководитель)
 	professionalQualities: ProfessionalQuality[];
 	personalQualities: PersonalQuality[];
 	neededMotivation1on1: boolean;
 	communicationIssues: boolean;
-	developmentDesire: "proactive" | "needsHelp" | "unsure" | "no";
+	developmentDesire: DevelopmentDesire;
 	successor: boolean;
-	successorReadiness?: "1-2y" | "3y" | "3+y";
+	successorReadiness?: SuccessorReadiness;
 	riskOfLeaving: number; // 0–10
 	olePriority1: string;
 	olePriority2: string;
+	createdAt: string; // ISO
 }
 
-// === Итоги ===
+// === Итоговая сводка по сотруднику за цикл ===
 
 export type RatingCategory = "low" | "medium" | "high";
 
@@ -105,4 +172,21 @@ export interface Summary {
 	ratingCategory: RatingCategory;
 	recommendations: string[];
 	finalComment: string;
+}
+
+// === Полная запись оценки сотрудника за цикл ===
+
+export type EmployeeReviewStatus = "in-progress" | "completed" | "locked";
+
+export interface EmployeeReview {
+	id: string;
+	employeeId: string; // User.id
+	cycleId: string; // Cycle.id
+	selfReviewId?: string; // SelfReview.id
+	managerReviewId?: string; // ManagerReview.id
+	potentialAssessmentId?: string; // PotentialAssessment.id
+	peerReviewIds: string[]; // PeerReview.id[]
+	summary?: Summary;
+	status: EmployeeReviewStatus;
+	updatedAt: string; // ISO
 }

@@ -1,51 +1,58 @@
 <script lang="ts">
-	import type { PageProps } from "./$types";
-	import { fade } from "svelte/transition";
+	import Card from "$lib/components/ui/Card.svelte";
 
-	let visible = $state(false);
+	let { data } = $props();
 
-	setTimeout(() => {
-		visible = true;
-	}, 200);
-
-	let { data }: PageProps = $props();
-
-	console.log(data);
+	const { goals } = data;
 </script>
 
-{#if visible}
-	<div transition:fade>
-		<h1>Страница сотрудника с задачами</h1>
-		<h2>Имя сотрудника: {data.user.fullName}</h2>
-		<p>Роль сотрудника: {data.user.role}</p>
-		<p>Отдел сотрудника: {data.user.department}</p>
-		<p>
-			Цикл: {data.cycle.name} ({data.cycle.startDate} – {data.cycle
-				.endDate})
-		</p>
+<svelte:head>
+	<title>Dashboard</title>
+</svelte:head>
 
-		{#if data.goals.length === 0}
-			<p>Цели ещё не заданы</p>
-		{:else}
-			<h3>Ваши цели: ({data.goals.length})</h3>
-			{#each data.goals as goal}
-				<div class="goal-card">
-					<h4>🎯 {goal.title}</h4>
-					<p><strong>Описание:</strong> {goal.description}</p>
-					<p>
-						<strong>Ожидаемый результат:</strong>
-						{goal.expectedResult}
-					</p>
-					<p><strong>Срок:</strong> {goal.deadline}</p>
-					{#if goal.tasks.length > 0}
-						<ul>
-							{#each goal.tasks as task}
-								<li>✅ {task}</li>
-							{/each}
-						</ul>
-					{/if}
-				</div>
-			{/each}
-		{/if}
-	</div>
-{/if}
+<div class="conteiner_title">
+	<h1>Dashboard</h1>
+</div>
+
+<a href="#/employee/goals">
+	<Card
+		icon="target"
+		title="Цели и задачи"
+		description={`Всего целей: ${goals.length}`}
+	></Card>
+</a>
+
+<a href="#/employee/self-review">
+	<Card
+		icon="thumbsUp"
+		title="Самооценка по целям"
+		description="Здесь находяится список ваших целей и самооценка по ним. Вывести общий бал, рекомендации"
+	/>
+</a>
+
+<a href="#/employee/peer-review">
+	<Card
+		icon="users"
+		title="Rewiew коллег"
+		description="Здесь находятся задачи по оценке коллег, сейчас их нет. Количество сколько коллег необхолдимо проревьюить"
+	/>
+</a>
+
+<a href="#/employee/result">
+	<Card
+		icon="trendingUp"
+		title="Результаты"
+		description="Здесь находятся пройденные полностью Performance Review с вашим результатом и комментариями. Вывести общий бал, рекомендации"
+	/>
+</a>
+
+<style>
+	:global(.conteiner_title) {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+		/*align-items: center;*/
+		padding-bottom: 1rem;
+		border-bottom: 1px solid var(--text-tertiary);
+	}
+</style>
