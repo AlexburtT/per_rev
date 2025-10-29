@@ -1,6 +1,7 @@
 @import "./_variables.css";
 @import "./_reset.css";
 @import "./_button.css";
+@import "./_card.css";
 
 html {
 	font-size: clamp(14px, 1.1vw + 0.8rem, 17px);

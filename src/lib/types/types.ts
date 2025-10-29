@@ -1,6 +1,6 @@
 // src/lib/types.ts
 
-export type UserRole = "employee" | "reviewer" | "manager" | "hr";
+export type UserRole = "employee" | "manager" | "hr";
 
 export interface User {
 	id: string;
@@ -31,6 +31,7 @@ export interface Task {
 	id: string;
 	title: string;
 	description?: string;
+	expectedResult?: string;
 	assignedTo: string; // User.id
 	assignedBy: string; // User.id (руководитель)
 	department: string; // отдел, к которому относится задача
@@ -38,6 +39,7 @@ export interface Task {
 	status: TaskStatus;
 	createdAt: string; // ISO
 	completedAt?: string; // ISO
+	deadline: string; // YYYY-MM-DD
 }
 
 // === Цели (пишет сотрудник) ===

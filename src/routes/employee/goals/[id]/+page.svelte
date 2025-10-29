@@ -1,4 +1,6 @@
 <script lang="ts">
+	import GoalDetail from "$lib/components/layouts/GoalDetail.svelte";
+	import { formatDate } from "$lib/utils/date";
 	let { data } = $props();
 	const { goal, tasks } = data;
 </script>
@@ -8,35 +10,56 @@
 </svelte:head>
 
 <div class="conteiner_title">
-	<h1>{goal.title}</h1>
+	<h2>{goal.title}</h2>
+	<p>Срок: {formatDate(goal.createdAt)} - {formatDate(goal.deadline)}</p>
 </div>
 
-<div class="goal-detail">
+<GoalDetail {goal} {tasks} />
+
+<!--<div class="goal-detail">
 	<p class="goal-description">{goal.description}</p>
-	<p><strong>Ожидаемый результат:</strong> {goal.expectedResult}</p>
-	<p><strong>Срок:</strong> до {goal.deadline}</p>
+	<strong>Ожидаемый результат:</strong>
+	<p>{goal.expectedResult}</p>
+
 	<p>
 		<strong>Статус:</strong>
 		<span class="status status--{goal.status}">{goal.status}</span>
 	</p>
 
-	<h2>Задачи ({tasks.length})</h2>
-	{#each tasks as task}
-		<div class="task-item">
-			<h3>{task.title}</h3>
-			{#if task.description}
+	<div class="goal__task-card">
+		<h3>Задачи:</h3>
+		{#each tasks as task}
+			<details class="task-item">
+				<summary>{task.title}</summary>
+
 				<p>{task.description}</p>
-			{/if}
-			<p><strong>Статус:</strong> {task.status}</p>
-			{#if task.completedAt}
-				<p>
-					<small
-						>Завершено: {new Date(
-							task.completedAt
-						).toLocaleDateString()}</small
-					>
-				</p>
-			{/if}
-		</div>
-	{/each}
+
+				<p>Ожидаемые результат:</p>
+				<p>{task.expectedResult}</p>
+
+				<p><strong>Статус:</strong> {task.status}</p>
+				{#if task.completedAt}
+					<p>
+						<small
+							>Завершено: {new Date(
+								task.completedAt
+							).toLocaleDateString()}</small
+						>
+					</p>
+				{/if}
+			</details>
+		{/each}
+	</div>
 </div>
+
+<style>
+	.goal__task-card {
+		display: flex;
+		flex-direction: column;
+		border-radius: 0.3rem;
+		border: 1px solid var(--text-tertiary);
+		gap: 1rem;
+		padding: 1rem;
+		background-color: var(--surface);
+	}
+</style>-->
