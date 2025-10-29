@@ -15,12 +15,15 @@ const config = {
 		// See https://svelte.dev/docs/kit/adapters for more information about adapters.
 		adapter: adapter({
 			out: 'build',
-			fallback: 'index.html'
-			//precompress: true
+			pages: 'build',
+			assets: 'build',
+			fallback: 'index.html',
+			precompress: false,
+			strict: true
 		}),
-		router: {
-			type: 'hash'
-		},
+		//router: {
+		//	type: 'hash'
+		//},
 		// Для Github Pages раскомментируйте следующую строку
 		paths: {
 			base: '/per_rev'

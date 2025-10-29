@@ -1,5 +1,4 @@
 <script lang="ts">
-	import Breadcrumbs from "$lib/components/layouts/Breadcrumbs.svelte";
 	import type { Field } from "$lib/components/ui/Form.svelte";
 	import Form from "$lib/components/ui/Form.svelte";
 
@@ -17,13 +16,12 @@
 	];
 </script>
 
-<Breadcrumbs
-	items={[
-		{ title: "Главная", href: "#/employee" },
-		{ title: "Цели и задачи", href: "#/employee/goals" },
-		{ title: "Новая цель" },
-	]}
-/>
-<h1>Новая цель</h1>
+<svelte:head>
+	<title>Новая цель</title>
+</svelte:head>
+
+<div class="conteiner_title">
+	<h1>Новая цель</h1>
+</div>
 
 <Form {fields} submitLabel="+ Добавить цель" />

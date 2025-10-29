@@ -1,68 +1,93 @@
 <script lang="ts">
 	import logo from "$lib/assets/Wink_new.svg";
+	import { clearUser } from "$lib/stores/userStore.svelte";
+
+	import { page } from "$app/state";
+	import Breadcrumbs from "$lib/components/layouts/Breadcrumbs.svelte";
+	import type { BreadcrumbItem } from "$lib/components/layouts/Breadcrumbs.svelte";
 	import {
-		userStore,
-		loadUsersList,
-		clearUser,
-	} from "$lib/stores/userStore.svelte";
+		employeeBreadcrumbs,
+		goalBreadcrumbs,
+		EMPLOYEE_PAGES,
+	} from "$lib/utils/breadcrumbs";
+	import { userStore } from "$lib/stores/userStore.svelte";
 
-	import Select from "../ui/Select.svelte";
+	// Определяем, нужно ли показывать крошки
+	const showBreadcrumbs = $derived(
+		page.url.pathname.startsWith("/employee") && page.url.pathname !== "/"
+	);
 
-	// Загружаем список пользователей для переключения (только для демо)
+	// Генерируем крошки
+	let breadcrumbs = $state<BreadcrumbItem[]>([]);
+
 	$effect(() => {
-		loadUsersList();
-	});
+		const path = page.url.pathname;
 
-	// Локальное значение для bind
-	let selectedUserId = $state("");
-
-	// Синхронизируем selectedUserId с userStore.currentUser
-	$effect(() => {
-		selectedUserId = userStore.currentUser?.id ?? "";
-	});
-
-	// При выборе — обновляем currentUser
-	$effect(() => {
-		if (selectedUserId) {
-			const user = userStore.userList.find(
-				(u) => u.id === selectedUserId
-			);
-			if (user) {
-				userStore.currentUser = user;
-				console.log("Выбран:", user.fullName);
+		// 1. Динамические цели: /employee/goals/abc123
+		if (
+			path.startsWith("/employee/goals/") &&
+			path.split("/").length === 4
+		) {
+			const goalId = path.split("/")[3];
+			const goal = userStore.goals?.find((g) => g.id === goalId);
+			if (goal) {
+				breadcrumbs = goalBreadcrumbs(goal.title); // ← только если цель найдена
+				return;
 			}
-		} else {
-			userStore.currentUser = undefined;
 		}
+
+		// 2. Новая цель: /employee/goals/new
+		if (path === "/employee/goals/new") {
+			breadcrumbs = [
+				{ title: "Главная", href: "/employee" },
+				{ title: "Мои цели", href: "/employee/goals" },
+				{ title: "Новая цель" },
+			];
+			return;
+		}
+
+		// 3. Статические страницы
+		if (path in EMPLOYEE_PAGES) {
+			breadcrumbs = employeeBreadcrumbs(path);
+			return;
+		}
+
+		// 4. Главная employee
+		if (path === "/employee") {
+			breadcrumbs = employeeBreadcrumbs(path);
+			return;
+		}
+
+		// 5. По умолчанию — пусто
+		breadcrumbs = [];
 	});
 </script>
 
 <header class="app-header">
-	<a href="#/" onclick={() => clearUser()}>
+	<a href="/" onclick={() => clearUser()}>
 		<img src={logo} alt="Логотип Performance Review" class="logo" />
 	</a>
-
-	<!-- Селектор пользователя -->
-	<Select
-		name="select_user"
-		placeholder="— Выберите пользователя —"
-		bind:value={selectedUserId}
-		options={userStore.userList.map((u) => ({
-			value: u.id,
-			label: `${u.fullName} ${u.role}`,
-		}))}
-	/>
+	{#if showBreadcrumbs && breadcrumbs.length > 0}
+		<div class="header-breadcrumbs">
+			<Breadcrumbs items={breadcrumbs} />
+		</div>
+		<div class="info-user">
+			<p>
+				<strong>{userStore.currentUser?.fullName}</strong>
+			</p>
+		</div>
+	{/if}
 </header>
 
 <style>
 	.app-header {
 		width: 100%;
-		background: var(--gradient);
 		margin-bottom: 1rem;
 		display: flex;
 		align-items: center;
-		justify-content: space-around;
+		justify-content: space-evenly;
 		padding: 1rem;
+		border-bottom: 1px solid var(--text-tertiary);
 	}
 
 	.logo {

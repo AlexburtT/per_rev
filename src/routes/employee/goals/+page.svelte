@@ -1,84 +1,24 @@
 <script lang="ts">
-	import Breadcrumbs from "$lib/components/layouts/Breadcrumbs.svelte";
 	import Card from "$lib/components/ui/Card.svelte";
 
-	import { onMount } from "svelte";
-	import { userStore } from "$lib/stores/userStore.svelte";
-	import * as goalsApi from "$lib/api/goals";
-	import * as tasksApi from "$lib/api/tasks";
-	import type { Goal } from "$lib/types/types";
-
-	let goals = $state<Goal[]>([]);
-	let loading = $state(true);
-	let error = $state<string | null>(null);
-
-	// Защита от прямого захода без пользователя
-	$effect(() => {
-		if (
-			!userStore.currentUser ||
-			userStore.currentUser.role !== "employee"
-		) {
-			// Можно редиректить на '/', но для SPA достаточно показать ошибку
-			error = "Пользователь не выбран или не является сотрудником";
-			loading = false;
-		}
-	});
-
-	// Загрузка целей и связанных задач
-	onMount(async () => {
-		if (!userStore.currentUser) return;
-
-		try {
-			loading = true;
-			error = null;
-
-			// 1. Загружаем цели сотрудника
-			const userGoals = await goalsApi.getByAuthor(
-				userStore.currentUser.id
-			);
-
-			// 2. Для каждой цели — загружаем задачи по taskIds
-			const goalsWithTasks = await Promise.all(
-				userGoals.map(async (goal) => {
-					const tasks = await tasksApi.getByIds(goal.taskIds);
-					return {
-						...goal,
-						tasks,
-					};
-				})
-			);
-
-			goals = goalsWithTasks;
-		} catch (err) {
-			console.error("Ошибка загрузки целей:", err);
-			error = "Не удалось загрузить цели";
-		} finally {
-			loading = false;
-		}
-	});
+	let { data } = $props();
+	const { goalsWithTasks: goals } = data;
 </script>
 
-<Breadcrumbs
-	items={[
-		{ title: "Главная", href: "#/employee" },
-		{ title: "Цели и задачи" },
-	]}
-/>
+<svelte:head>
+	<title>Мои цели</title>
+</svelte:head>
 
 <div class="conteiner_title">
 	<h1>Мои цели</h1>
 </div>
 
-{#if loading}
-	<p>Загрузка целей...</p>
-{:else if error}
-	<p class="error">{error}</p>
-{:else if goals.length === 0}
+{#if goals.length === 0}
 	<p>У вас пока нет целей.</p>
 {:else}
 	<div class="goals-grid">
 		{#each goals as goal}
-			<a href="#/employee/goals/{goal.id}" class="goal-link">
+			<a href="/employee/goals/{goal.id}" class="goal-link">
 				<Card
 					title={goal.title}
 					layout="vertical"
@@ -96,7 +36,7 @@
 	</div>
 {/if}
 
-<a href="#/employee/goals/new" class="btn primary">+ Новая цель</a>
+<a href="/employee/goals/new" class="btn primary">+ Новая цель</a>
 
 <style>
 	.goals-grid {
