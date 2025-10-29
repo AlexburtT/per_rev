@@ -1,15 +1,17 @@
 <script lang="ts">
-	import Breadcrumbs from "$lib/components/layouts/Breadcrumbs.svelte";
-	import { goalBreadcrumbs } from "$lib/utils/breadcrumbs";
-
 	let { data } = $props();
 	const { goal, tasks } = data;
 </script>
 
-<Breadcrumbs items={goalBreadcrumbs(goal.title)} />
+<svelte:head>
+	<title>{goal.title}</title>
+</svelte:head>
+
+<div class="conteiner_title">
+	<h1>{goal.title}</h1>
+</div>
 
 <div class="goal-detail">
-	<h1>{goal.title}</h1>
 	<p class="goal-description">{goal.description}</p>
 	<p><strong>Ожидаемый результат:</strong> {goal.expectedResult}</p>
 	<p><strong>Срок:</strong> до {goal.deadline}</p>

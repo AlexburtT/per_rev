@@ -1,3 +1,11 @@
+<svelte:head>
+	<title>Результаты Rewiew</title>
+</svelte:head>
+
+<div class="conteiner_title">
+	<h1>Результаты Rewiew</h1>
+</div>
+
 <h1>Здесь находятся результаты ревью.</h1>
 <p>
 	Статусы: на вевью у коллег, на ревью у руководителя, оспаривание,

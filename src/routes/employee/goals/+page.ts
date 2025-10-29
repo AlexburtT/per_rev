@@ -16,6 +16,5 @@ export const load: PageLoad = async ({ parent }) => {
 
 	return {
 		goalsWithTasks,
-		breadcrumbTitle: "Цели",
 	};
 };

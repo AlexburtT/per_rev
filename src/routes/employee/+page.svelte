@@ -1,25 +1,17 @@
 <script lang="ts">
 	import Card from "$lib/components/ui/Card.svelte";
-	import Breadcrumbs from "$lib/components/layouts/Breadcrumbs.svelte";
-	import { employeeBreadcrumbs } from "$lib/utils/breadcrumbs";
-	import { page } from "$app/state";
 
 	let { data } = $props();
 
 	const { user, goals, managerName } = data;
 </script>
 
-<Breadcrumbs items={employeeBreadcrumbs(page.url.pathname)} />
+<svelte:head>
+	<title>Dashboard</title>
+</svelte:head>
 
 <div class="conteiner_title">
 	<h1>Dashboard</h1>
-	<div class="info-user">
-		<p>Ваш отдел: <strong>{user.department}</strong></p>
-		<p>Ваш руководитель: <strong>{managerName}</strong></p>
-		<p>
-			Ваша должность: <strong>{user.specialization}</strong>
-		</p>
-	</div>
 </div>
 
 <a href="/employee/goals">

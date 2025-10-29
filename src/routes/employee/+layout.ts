@@ -1,6 +1,5 @@
 import type { LayoutLoad } from "./$types";
-import { userStore } from "$lib/stores/userStore.svelte";
-import * as goalsApi from "$lib/api/goals";
+import { userStore, loadUserGoals } from "$lib/stores/userStore.svelte";
 
 export const load: LayoutLoad = async () => {
 	const user = userStore.currentUser;
@@ -11,7 +10,7 @@ export const load: LayoutLoad = async () => {
 	}
 
 	// Загружаем цели — они нужны и на dashboard, и на /goals
-	const goals = await goalsApi.getByAuthor(user.id);
+	const goals = await loadUserGoals(user.id);
 
 	// Находим ФИО руководителя
 	const manager = user.managerId
@@ -20,7 +19,7 @@ export const load: LayoutLoad = async () => {
 
 	return {
 		user,
-		goals,
 		managerName: manager?.fullName,
+		goals,
 	};
 };

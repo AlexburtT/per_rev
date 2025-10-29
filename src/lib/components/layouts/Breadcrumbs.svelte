@@ -1,8 +1,13 @@
 <script lang="ts">
-	interface BreadcrumbItem {
+	export type BreadcrumbItem = {
 		title: string;
 		href?: string;
-	}
+	};
+
+	//interface BreadcrumbItem {
+	//	title?: string;
+	//	href?: string;
+	//}
 
 	interface Props {
 		items: BreadcrumbItem[];

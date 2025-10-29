@@ -1,25 +1,13 @@
 <script lang="ts">
-	import Breadcrumbs from "$lib/components/layouts/Breadcrumbs.svelte";
-	import { employeeBreadcrumbs } from "$lib/utils/breadcrumbs";
 	import Card from "$lib/components/ui/Card.svelte";
-	import { page } from "$app/state";
 
 	let { data } = $props();
 	const { goalsWithTasks: goals } = data;
 </script>
 
 <svelte:head>
-	<title>Главная</title>
+	<title>Мои цели</title>
 </svelte:head>
-
-<Breadcrumbs items={employeeBreadcrumbs(page.url.pathname)} />
-
-<!--<Breadcrumbs
-	items={[
-		{ title: "Главная", href: "/employee" },
-		{ title: "Цели и задачи" },
-	]}
-/>-->
 
 <div class="conteiner_title">
 	<h1>Мои цели</h1>
