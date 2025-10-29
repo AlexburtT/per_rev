@@ -12,16 +12,18 @@
 	} from "$lib/utils/breadcrumbs";
 	import { userStore } from "$lib/stores/userStore.svelte";
 
+	// Извлекаем путь из хеша
+	const hashPath = $derived(page.url.hash.replace(/^#/, "") || "/");
+
 	// Определяем, нужно ли показывать крошки
 	const showBreadcrumbs = $derived(
-		page.url.pathname.startsWith("/employee") && page.url.pathname !== "/"
+		hashPath.startsWith("/employee") && hashPath !== "/"
 	);
-
 	// Генерируем крошки
 	let breadcrumbs = $state<BreadcrumbItem[]>([]);
 
 	$effect(() => {
-		const path = page.url.pathname;
+		const path = hashPath;
 
 		// 1. Динамические цели: /employee/goals/abc123
 		if (
@@ -39,8 +41,8 @@
 		// 2. Новая цель: /employee/goals/new
 		if (path === "/employee/goals/new") {
 			breadcrumbs = [
-				{ title: "Главная", href: "/employee" },
-				{ title: "Мои цели", href: "/employee/goals" },
+				{ title: "Главная", href: "#/employee" },
+				{ title: "Мои цели", href: "#/employee/goals" },
 				{ title: "Новая цель" },
 			];
 			return;

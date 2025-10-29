@@ -3,7 +3,7 @@
 
 	let { data } = $props();
 
-	const { user, goals, managerName } = data;
+	const { goals } = data;
 </script>
 
 <svelte:head>
@@ -14,7 +14,7 @@
 	<h1>Dashboard</h1>
 </div>
 
-<a href="/employee/goals">
+<a href="#/employee/goals">
 	<Card
 		icon="target"
 		title="Цели и задачи"
@@ -22,7 +22,7 @@
 	></Card>
 </a>
 
-<a href="/employee/self-review">
+<a href="#/employee/self-review">
 	<Card
 		icon="thumbsUp"
 		title="Самооценка по целям"
@@ -30,7 +30,7 @@
 	/>
 </a>
 
-<a href="/employee/peer-review">
+<a href="#/employee/peer-review">
 	<Card
 		icon="users"
 		title="Rewiew коллег"
@@ -38,7 +38,7 @@
 	/>
 </a>
 
-<a href="/employee/result">
+<a href="#/employee/result">
 	<Card
 		icon="trendingUp"
 		title="Результаты"

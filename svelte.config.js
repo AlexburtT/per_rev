@@ -21,9 +21,9 @@ const config = {
 			precompress: false,
 			strict: true
 		}),
-		//router: {
-		//	type: 'hash'
-		//},
+		router: {
+			type: 'hash'
+		},
 		// Для Github Pages раскомментируйте следующую строку
 		paths: {
 			base: '/per_rev'

@@ -18,7 +18,7 @@
 {:else}
 	<div class="goals-grid">
 		{#each goals as goal}
-			<a href="/employee/goals/{goal.id}" class="goal-link">
+			<a href="#/employee/goals/{goal.id}" class="goal-link">
 				<Card
 					title={goal.title}
 					layout="vertical"
@@ -36,7 +36,7 @@
 	</div>
 {/if}
 
-<a href="/employee/goals/new" class="btn primary">+ Новая цель</a>
+<a href="#/employee/goals/new" class="btn primary">+ Новая цель</a>
 
 <style>
 	.goals-grid {
