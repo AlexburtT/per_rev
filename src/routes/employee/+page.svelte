@@ -49,16 +49,10 @@
 <style>
 	:global(.conteiner_title) {
 		display: flex;
-		align-items: center;
+		flex-direction: column;
+		gap: 0.5rem;
+		/*align-items: center;*/
 		padding-bottom: 1rem;
 		border-bottom: 1px solid var(--text-tertiary);
-	}
-
-	.info-user {
-		display: flex;
-		justify-content: flex-end;
-		align-items: center;
-		gap: 1rem;
-		width: 100%;
 	}
 </style>

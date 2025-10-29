@@ -1,18 +1,18 @@
 <script lang="ts">
-	type InputType =
-		| "text"
-		| "email"
-		| "password"
-		| "number"
-		| "date"
-		| "textarea";
+	//export type InputType =
+	//	| "text"
+	//	| "email"
+	//	| "password"
+	//	| "number"
+	//	| "date"
+	//	| "textarea";
 
 	interface Props {
 		name: string;
 		label?: string;
 		placeholder?: string;
 		value?: string;
-		type?: InputType;
+		type?: string;
 		disabled?: boolean;
 		required?: boolean;
 		rows?: number; //только для textarea
@@ -22,14 +22,14 @@
 		name,
 		label,
 		placeholder,
-		value = "",
+		value = $bindable(),
 		type = "text",
 		disabled = false,
 		required = false,
 		rows = 4,
 	}: Props = $props();
 
-	let dataValue = $state(value);
+	//let dataValue = $state(value);
 </script>
 
 <label class="input">
@@ -45,7 +45,7 @@
 			{disabled}
 			{required}
 			{rows}
-			bind:value={dataValue}
+			bind:value
 			class="input__field input__field--textarea"
 		></textarea>
 	{:else}
@@ -55,7 +55,7 @@
 			{disabled}
 			{required}
 			{type}
-			bind:value={dataValue}
+			bind:value
 			class="input__field"
 		/>
 	{/if}

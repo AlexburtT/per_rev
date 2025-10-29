@@ -33,10 +33,11 @@
 				</Card>
 			</a>
 		{/each}
+		{#if goals.length < 5}
+			<a href="#/employee/goals/new" class="btn primary">+ Новая цель</a>
+		{/if}
 	</div>
 {/if}
-
-<a href="#/employee/goals/new" class="btn primary">+ Новая цель</a>
 
 <style>
 	.goals-grid {

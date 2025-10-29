@@ -34,9 +34,29 @@
 	function handleDialogClose() {
 		onClose();
 	}
+
+	// Закрытие по клику вне содержимого (на backdrop)
+	function handleClickOutside(e: MouseEvent) {
+		if (!dialogEl) return;
+		const rect = dialogEl.getBoundingClientRect();
+		const clickedInDialog =
+			rect.left <= e.clientX &&
+			e.clientX <= rect.right &&
+			rect.top <= e.clientY &&
+			e.clientY <= rect.bottom;
+
+		if (!clickedInDialog) {
+			onClose();
+		}
+	}
 </script>
 
-<dialog bind:this={dialogEl} onclose={handleDialogClose} class="modal">
+<dialog
+	bind:this={dialogEl}
+	onclose={handleDialogClose}
+	onclick={handleClickOutside}
+	class="modal"
+>
 	<header class="modal-header">
 		<h2>{title}</h2>
 		{#if showCloseButton}
@@ -55,15 +75,46 @@
 	/* Стили для <dialog> */
 	.modal {
 		border: none;
-		border-radius: 12px;
+		border-radius: 0.5rem;
 		box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-		padding: 0;
 		width: 100%;
-		max-width: 500px;
-		max-height: 90vh;
+		max-width: 35rem;
+		height: fit-content;
 		overflow: hidden;
 		background: var(--surface);
 		color: var(--text);
+		position: fixed;
+		margin: 10rem auto;
+		transition:
+			display 0.3s allow-discrete,
+			overlay 0.3s allow-discrete;
+
+		animation: close 0.3s forwards;
+		&[open] {
+			animation: open 0.3s forwards;
+		}
+
+		&:not([open]) {
+			animation: close 0.3s forwards;
+		}
+	}
+
+	@keyframes open {
+		from {
+			opacity: 0;
+		}
+		to {
+			opacity: 1;
+		}
+	}
+
+	@keyframes close {
+		from {
+			opacity: 1;
+		}
+		to {
+			opacity: 0;
+		}
 	}
 
 	/* Убираем стандартный backdrop (если нужно свой) */

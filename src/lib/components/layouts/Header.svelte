@@ -97,4 +97,7 @@
 		height: 3rem;
 		padding-right: 2rem;
 	}
+
+	/*.info-user {
+	}*/
 </style>

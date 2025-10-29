@@ -4,7 +4,7 @@
 		disabled?: boolean;
 		type?: "button" | "submit" | "reset";
 		title?: string;
-		onClick?: () => {};
+		onClick?: () => void;
 	}
 
 	const {
