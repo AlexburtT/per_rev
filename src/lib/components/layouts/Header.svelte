@@ -63,10 +63,11 @@
 		// 5. По умолчанию — пусто
 		breadcrumbs = [];
 	});
+	//Для GitHub Pages необходимо или в ссылку ниже вставить /per_rev/ или base делать
 </script>
 
 <header class="app-header">
-	<a href="/" onclick={() => clearUser()}>
+	<a href="/per_rev/" onclick={() => clearUser()}>
 		<img src={logo} alt="Логотип Performance Review" class="logo" />
 	</a>
 	{#if showBreadcrumbs && breadcrumbs.length > 0}
