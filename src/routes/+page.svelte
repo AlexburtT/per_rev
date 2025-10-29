@@ -39,9 +39,9 @@
 	$effect(() => {
 		if (userStore.currentUser) {
 			if (userStore.currentUser.role === "manager") {
-				goto("/manager");
+				goto("#/manager");
 			} else {
-				goto("/employee");
+				goto("#/employee");
 			}
 		}
 	});

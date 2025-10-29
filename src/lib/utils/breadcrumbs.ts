@@ -1,5 +1,5 @@
 // Базовый сегмент для всех employee-страниц
-const BASE = [{ title: "Главная", href: "/employee" }];
+const BASE = [{ title: "Главная", href: "#/employee" }];
 
 // Статические страницы
 export const EMPLOYEE_PAGES = {
@@ -22,7 +22,7 @@ export function employeeBreadcrumbs(pathname: string) {
 export function goalBreadcrumbs(goalTitle: string) {
 	return [
 		...BASE,
-		{ title: "Цели", href: "/employee/goals" },
+		{ title: "Цели", href: "#/employee/goals" },
 		{ title: goalTitle },
 	];
 }
