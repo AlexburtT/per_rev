@@ -32,7 +32,7 @@ export interface Task {
 	title: string;
 	description?: string;
 	expectedResult?: string;
-	assignedTo: string; // User.id
+	assignedTo?: string; // User.id
 	assignedBy: string; // User.id (руководитель)
 	department: string; // отдел, к которому относится задача
 	specialization?: string; // специализация (опционально)
