@@ -3,24 +3,20 @@
 		name: string;
 		label?: string;
 		placeholder?: string;
-		value: string;
 		type?: string;
 		disabled?: boolean;
 		required?: boolean;
 		rows?: number; //только для textarea
-		onChange?: (value: string) => void;
 	}
 
 	let {
 		name,
 		label,
 		placeholder,
-		value,
 		type = "text",
 		disabled = false,
 		required = false,
 		rows = 4,
-		onChange,
 	}: Props = $props();
 </script>
 
@@ -37,8 +33,6 @@
 			{disabled}
 			{required}
 			{rows}
-			{value}
-			oninput={onChange}
 			class="input__field input__field--textarea"
 		></textarea>
 	{:else}
@@ -48,8 +42,6 @@
 			{disabled}
 			{required}
 			{type}
-			{value}
-			oninput={onChange}
 			class="input__field"
 		/>
 	{/if}

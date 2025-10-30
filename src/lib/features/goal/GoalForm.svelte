@@ -46,7 +46,7 @@
 	let isDialogOpen = $state(false);
 </script>
 
-<Form submitLabel="Сохранить цель">
+<Form name="goalForm" submitLabel="Сохранить цель">
 	{#each fields as field}
 		<Input
 			name={field.name}
