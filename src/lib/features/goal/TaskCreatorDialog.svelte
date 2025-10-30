@@ -26,14 +26,11 @@
 		dateEnd: "",
 	});
 
-	let data = {
-		title: "",
-		description: "",
-		result: "",
-		dateEnd: "",
-	};
-
-	$inspect("Просто даннные из поля", data);
+	function handleFieldChange(name: string, value: string) {
+		if (name in formData) {
+			formData[name as keyof typeof formData] = value;
+		}
+	}
 
 	//const resetForm = () => {
 	//	formData.title = "";
@@ -67,19 +64,20 @@
 			type="text"
 			required
 			value={formData.title}
+			onChange={(value: string) => handleFieldChange("title", value)}
 		/>
 		<Input
 			label="Описание"
 			name="description"
 			type="textarea"
 			required
-			value={data.description}
+			value={formData.description}
 		/>
 		<Input
 			label="Ожидаемый результат"
 			name="result"
 			type="textarea"
-			value={data.result}
+			value={formData.result}
 		/>
 		<p class="p-bold">Сроки выполнения:</p>
 		<hr />
@@ -89,7 +87,7 @@
 				name="dateEnd"
 				type="date"
 				required
-				value={data.dateEnd}
+				value={formData.dateEnd}
 			/>
 		</div>
 	</Form>

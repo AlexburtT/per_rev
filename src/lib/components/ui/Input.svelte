@@ -8,7 +8,7 @@
 		disabled?: boolean;
 		required?: boolean;
 		rows?: number; //только для textarea
-		//onChange?: (name: string, value: string) => void;
+		onChange?: (value: string) => void;
 	}
 
 	let {
@@ -20,7 +20,7 @@
 		disabled = false,
 		required = false,
 		rows = 4,
-		//onChange,
+		onChange,
 	}: Props = $props();
 </script>
 
@@ -37,6 +37,8 @@
 			{disabled}
 			{required}
 			{rows}
+			{value}
+			oninput={onChange}
 			class="input__field input__field--textarea"
 		></textarea>
 	{:else}
@@ -46,6 +48,8 @@
 			{disabled}
 			{required}
 			{type}
+			{value}
+			oninput={onChange}
 			class="input__field"
 		/>
 	{/if}
