@@ -1,26 +1,35 @@
 <!-- src/lib/components/GoalDetail.svelte -->
 <script lang="ts">
 	import { goto } from "$app/navigation";
+	import type { TaskData } from "$lib/types/forms";
 	import type { Goal, Task } from "$lib/types/types";
 	import {
 		goalStatusLabels,
 		taskStatusLabels,
 	} from "$lib/utils/statusLabels";
-	import TaskCard from "./TaskCard.svelte";
+	import Button from "../ui/Button.svelte";
+	import GoalTaskCard from "./GoalTaskCard.svelte";
 
-	export let goal: Goal;
-	export let tasks: Task[] = [];
-
-	function editGoal() {
-		goto(`/employee/goals/${goal.id}/edit`);
+	interface Props {
+		goal: Goal;
+		tasks?: Task[];
+		canEdit?: boolean;
+		onAddTask?: (data: TaskData) => void;
+		onEdit?: () => void;
+		onDelete?: () => void;
 	}
 
-	function deleteGoal() {
-		if (confirm("Вы уверены, что хотите удалить цель?")) {
-			// Здесь можно вызвать действие из store или API
-			console.log("Удаление цели:", goal.id);
-		}
-	}
+	const {
+		goal,
+		tasks,
+		canEdit = false,
+		onAddTask,
+		onEdit,
+		onDelete,
+	}: Props = $props();
+
+	const handleEdit = () => onEdit?.();
+	const handleDelete = () => onDelete?.();
 </script>
 
 <!-- Описание цели -->
@@ -43,11 +52,22 @@
 	</span>
 </div>
 
+{#if canEdit}
+	<div class="goal__actions">
+		<Button
+			title="Редактировать цель"
+			onClick={handleEdit}
+			variant="outline"
+		/>
+		<Button title="Удалить цель" onClick={handleDelete} variant="danger" />
+	</div>
+{/if}
+
 <!-- Задачи -->
 <div class="goal__tasks">
 	<h3>Задачи:</h3>
 	<div class="goal__tasks--task">
-		<TaskCard {tasks} />
+		<GoalTaskCard {tasks} canAddTask={canEdit} onTaskCreate={onAddTask} />
 	</div>
 </div>
 

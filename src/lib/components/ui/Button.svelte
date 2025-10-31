@@ -1,6 +1,6 @@
 <script lang="ts">
 	interface Props {
-		variant?: "primary" | "secondary" | "outline";
+		variant?: "primary" | "secondary" | "outline" | "danger";
 		disabled?: boolean;
 		type?: "button" | "submit" | "reset";
 		title?: string;

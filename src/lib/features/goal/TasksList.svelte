@@ -9,15 +9,25 @@
 		onTaskToggle?: (id: string, checked: boolean) => void;
 	}
 
-	const { tasks, isLoading, selectedIds, onTaskToggle }: Props = $props();
+	const {
+		tasks = [],
+		isLoading,
+		selectedIds,
+		onTaskToggle,
+	}: Props = $props();
 </script>
 
 <div>
 	<h3>Список доступных задач</h3>
+	<hr />
 	{#if isLoading}
 		<p>Загрузка...</p>
-	{:else if tasks?.length === 0}
+	{:else if tasks.length === 0}
 		<p>Нет доступных задач</p>
+		<i>
+			*/ Здесь отображается список доступных задач, назначенных
+			руководителем
+		</i>
 	{:else}
 		{#each tasks as task}
 			<div class="task-item">
@@ -35,3 +45,6 @@
 		{/each}
 	{/if}
 </div>
+
+<style>
+</style>

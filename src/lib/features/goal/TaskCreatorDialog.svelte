@@ -2,13 +2,8 @@
 	import Dialog from "$lib/components/layouts/Dialog.svelte";
 	import Form from "$lib/components/ui/Form.svelte";
 	import Input from "$lib/components/ui/Input.svelte";
-
-	interface TaskData {
-		title: string;
-		description: string;
-		result: string;
-		dateEnd: string;
-	}
+	import { getFormData, resetForm } from "$lib/utils/form";
+	import type { TaskData } from "$lib/types/forms";
 
 	interface Props {
 		open: boolean;
@@ -19,18 +14,11 @@
 	const { open, onCreate, onClose }: Props = $props();
 
 	const handleSubmit = (event: Event) => {
-		event.preventDefault(); // обязательно!
-		const form = event.target as HTMLFormElement;
-		const data = Object.fromEntries(
-			new FormData(form)
-		) as unknown as TaskData;
+		const data = getFormData<TaskData>(event);
 
-		// Валидация (минимальная)
-		if (!data.title || !data.dateEnd) return;
-
-		onCreate?.(data);
+		onCreate?.(data!);
+		resetForm(event);
 		onClose?.();
-		console.log("Данные формы", data);
 	};
 
 	const handleClose = () => onClose?.();

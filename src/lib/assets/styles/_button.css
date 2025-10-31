@@ -16,6 +16,11 @@
 	border-color: var(--text-disabled);
 	color: var(--text);
 }
+.btn.danger {
+	background: transparent;
+	border-color: var(--danger);
+	color: var(--surface);
+}
 .btn.secondary {
 	background-color: var(--primary-light);
 	color: var(--divider);

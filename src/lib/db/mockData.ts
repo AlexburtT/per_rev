@@ -117,6 +117,8 @@ export async function initMockData() {
 				specialization: emp.specialization,
 				status: randomElement(["planned", "in-progress"]),
 				createdAt: randomDate(taskStartDate, taskEndDate),
+				expectedResult: "",
+				deadline: "",
 			};
 			await taskApi.put(task);
 			tasks.push(task);
