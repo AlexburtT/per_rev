@@ -4,6 +4,7 @@
 	import { createTask } from "$lib/api/tasks.js";
 	import GoalForm from "$lib/features/goal/GoalForm.svelte";
 	import TasksList from "$lib/features/goal/TasksList.svelte";
+	import { userStore } from "$lib/stores/userStore.svelte.js";
 	import type { GoalData, TaskData } from "$lib/types/forms.js";
 	import type { Task, Cycle, User } from "$lib/types/types.js";
 	import {
@@ -50,7 +51,7 @@
 			);
 
 			await saveGoal(goal);
-
+			userStore.goals = [...userStore.goals, goal];
 			await goto("#/employee/goals");
 		} catch (err) {
 			console.error("Ошибка сохранения:", err);

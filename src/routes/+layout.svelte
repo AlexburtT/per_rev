@@ -1,3 +1,4 @@
+<!--//routes/+layout.svelte-->
 <script lang="ts">
 	import "$lib/assets/styles/main.css";
 	import { page } from "$app/state";
@@ -6,7 +7,7 @@
 	import { fade } from "svelte/transition";
 	import { initMockData } from "$lib/db/mockData";
 	import { onMount } from "svelte";
-	import { loadUsersList } from "$lib/stores/userStore.svelte";
+	import { loadUsersList, userStore } from "$lib/stores/userStore.svelte";
 
 	// Инициализируем базу при первом запуске
 	onMount(async () => {

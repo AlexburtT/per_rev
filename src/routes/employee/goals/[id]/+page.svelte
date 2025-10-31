@@ -3,6 +3,7 @@
 	import { removeGoal, saveGoal } from "$lib/api/goals.js";
 	import { createTask, removeTask } from "$lib/api/tasks.js";
 	import GoalDetail from "$lib/components/layouts/GoalDetail.svelte";
+	import { userStore } from "$lib/stores/userStore.svelte.js";
 	import type { TaskData } from "$lib/types/forms.js";
 	import type { Goal, Task, User } from "$lib/types/types.js";
 	import { formatDate } from "$lib/utils/date";
@@ -59,6 +60,7 @@
 			}
 			// Удаляем цель
 			await removeGoal(goal.id);
+			userStore.goals = userStore.goals.filter((g) => g.id !== goal.id);
 			// Перенаправляем
 			await goto("#/employee/goals");
 		} catch (err) {

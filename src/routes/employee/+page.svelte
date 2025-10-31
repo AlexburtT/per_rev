@@ -1,9 +1,8 @@
 <script lang="ts">
 	import Card from "$lib/components/ui/Card.svelte";
+	import { userStore } from "$lib/stores/userStore.svelte.js";
 
 	let { data } = $props();
-
-	const goals = data.goals;
 </script>
 
 <svelte:head>
@@ -18,7 +17,7 @@
 	<Card
 		icon="target"
 		title="Цели и задачи"
-		description={`Всего целей: ${goals.length}`}
+		description={`Всего целей: ${userStore.goals.length}`}
 	></Card>
 </a>
 

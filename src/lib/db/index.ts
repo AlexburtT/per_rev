@@ -1,5 +1,4 @@
 // src/lib/db/index.ts
-
 import {
 	getAll,
 	getOne,
@@ -22,7 +21,6 @@ import type {
 	PotentialAssessment,
 	EmployeeReview,
 } from "$lib/types/types";
-import { getById } from "$lib/api/goals";
 
 // --- Users ---
 export const userApi = {
