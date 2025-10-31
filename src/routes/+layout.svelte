@@ -17,7 +17,7 @@
 	let { children } = $props();
 </script>
 
-<Header />
+<Header data={page.data} />
 
 <main class="app-main">
 	{#key page.url.pathname}

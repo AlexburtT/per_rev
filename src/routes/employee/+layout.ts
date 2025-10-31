@@ -1,25 +1,28 @@
 import type { LayoutLoad } from "./$types";
-import { userStore, loadUserGoals } from "$lib/stores/userStore.svelte";
+import { userApi, goalApi } from "$lib/db";
+import type { User } from "$lib/types/types";
 
-export const load: LayoutLoad = async () => {
-	const user = userStore.currentUser;
+export const load: LayoutLoad = async ({ parent }) => {
+	const { user } = await parent();
 
-	// Защита — если нет пользователя или не сотрудник
-	if (!user || user.role !== "employee") {
+	// Защита — только для сотрудников
+	if (user.role !== "employee") {
 		throw new Error("Доступ запрещён");
 	}
 
-	// Загружаем цели — они нужны и на dashboard, и на /goals
-	const goals = await loadUserGoals(user.id);
+	// Загружаем цели напрямую
+	const goals = await goalApi.getByAuthor(user.id);
 
-	// Находим ФИО руководителя
-	const manager = user.managerId
-		? userStore.userList.find((u) => u.id === user.managerId)
-		: null;
+	// Загружаем руководителя
+	let managerName: string | null = null;
+	if (user.managerId) {
+		const manager = await userApi.getById(user.managerId);
+		managerName = manager?.fullName || null;
+	}
 
 	return {
 		user,
-		managerName: manager?.fullName,
+		managerName,
 		goals,
 	};
 };

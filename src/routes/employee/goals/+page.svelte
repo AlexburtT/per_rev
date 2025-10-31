@@ -2,7 +2,7 @@
 	import Card from "$lib/components/ui/Card.svelte";
 
 	let { data } = $props();
-	const { goalsWithTasks: goals } = data;
+	const goals = data.goalsWithTasks;
 </script>
 
 <svelte:head>

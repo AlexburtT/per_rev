@@ -1,4 +1,9 @@
 // Базовый сегмент для всех employee-страниц
+export type BreadcrumbItem = {
+	title: string;
+	href?: string;
+};
+
 const BASE = [{ title: "Главная", href: "#/employee" }];
 
 // Статические страницы
@@ -10,7 +15,7 @@ export const EMPLOYEE_PAGES = {
 } as const;
 
 // Генератор для статических страниц
-export function employeeBreadcrumbs(pathname: string) {
+export function employeeBreadcrumbs(pathname: string): BreadcrumbItem[] {
 	const title = EMPLOYEE_PAGES[pathname as keyof typeof EMPLOYEE_PAGES];
 	if (title) {
 		return [...BASE, { title }];
@@ -19,7 +24,7 @@ export function employeeBreadcrumbs(pathname: string) {
 }
 
 // Генератор для динамических страниц (цели)
-export function goalBreadcrumbs(goalTitle: string) {
+export function goalBreadcrumbs(goalTitle: string): BreadcrumbItem[] {
 	return [
 		...BASE,
 		{ title: "Мои цели", href: "#/employee/goals" },

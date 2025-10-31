@@ -3,7 +3,7 @@
 
 	let { data } = $props();
 
-	const { goals } = data;
+	const goals = data.goals;
 </script>
 
 <svelte:head>

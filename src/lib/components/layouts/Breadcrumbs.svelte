@@ -1,26 +1,38 @@
 <script lang="ts">
-	export type BreadcrumbItem = {
-		title: string;
-		href?: string;
-	};
-
-	//interface BreadcrumbItem {
-	//	title?: string;
-	//	href?: string;
-	//}
+	import {
+		employeeBreadcrumbs,
+		goalBreadcrumbs,
+		EMPLOYEE_PAGES,
+	} from "$lib/utils/breadcrumbs";
 
 	interface Props {
-		items: BreadcrumbItem[];
+		hashPath: string;
+		goalTitle?: string | null;
 	}
 
-	const { items }: Props = $props();
+	const { hashPath, goalTitle = null }: Props = $props();
+
+	const breadcrumbs = $derived(
+		/^\/employee\/goals\/[^/]+$/.test(hashPath)
+			? goalBreadcrumbs(goalTitle || "Новая цель")
+			: hashPath === "/employee/goals/new"
+				? [
+						...employeeBreadcrumbs("/employee/goals"),
+						{ title: "Новая цель" },
+					]
+				: hashPath in EMPLOYEE_PAGES
+					? employeeBreadcrumbs(hashPath)
+					: hashPath === "/employee"
+						? employeeBreadcrumbs(hashPath)
+						: []
+	);
 </script>
 
 <nav aria-label="Хлебные крошки" class="breadcrumbs">
-	{#each items as item, i}
+	{#each breadcrumbs as item, i}
 		{#if i > 0}<span class="breadcrumbs__separator"> / </span>{/if}
 
-		{#if i === items.length - 1}
+		{#if i === breadcrumbs.length - 1}
 			<!-- Текущая страница — не ссылка, яркий цвет -->
 			<span class="breadcrumbs__current">{item.title}</span>
 		{:else if item.href}
