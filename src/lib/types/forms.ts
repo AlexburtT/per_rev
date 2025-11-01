@@ -9,5 +9,5 @@ export type GoalData = {
 	title: string;
 	description: string;
 	expectedResult: string;
-	deadline: string;
+	dateEnd: string;
 };

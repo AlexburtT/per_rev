@@ -63,11 +63,11 @@
 	<title>Новая цель</title>
 </svelte:head>
 
-<div class="conteiner_title">
+<div class="conteiner__title">
 	<h1>Новая цель</h1>
 </div>
 
-<div class="newgoal__conteiner">
+<div class="goal__conteiner">
 	<GoalForm
 		authorId={user.id}
 		{user}
@@ -77,11 +77,3 @@
 	/>
 	<TasksList />
 </div>
-
-<style>
-	.newgoal__conteiner {
-		display: grid;
-		grid-template-columns: 2fr 1fr;
-		gap: 1rem;
-	}
-</style>

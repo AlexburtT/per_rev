@@ -27,7 +27,7 @@ export const mapGoalFormDataToEntity = (
 	title: goalData.title,
 	description: goalData.description,
 	expectedResult: goalData.expectedResult,
-	deadline: goalData.deadline,
+	deadline: goalData.dateEnd,
 	taskIds: taskIds,
 	authorId: user.id,
 	cycleId: cycle.id,

@@ -25,11 +25,25 @@
 	background-color: var(--primary-light);
 	color: var(--divider);
 }
-.btn--disabled {
+.btn__disabled {
 	opacity: 0.6;
 	cursor: not-allowed;
 }
 
-.btn:hover {
+.btn:hover:not(.btn--disabled) {
 	background-color: var(--primary-medium);
+}
+
+.btn.btn__icon-only {
+	width: auto;
+	height: auto;
+	padding: 0.5rem;
+	background: transparent !important;
+	border: none !important;
+	color: var(--text);
+}
+
+.btn__icon-only:hover:not(.btn--disabled) {
+	background: transparent !important;
+	color: var(--primary);
 }

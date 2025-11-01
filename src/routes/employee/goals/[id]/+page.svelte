@@ -2,11 +2,10 @@
 	import { goto } from "$app/navigation";
 	import * as api from "$lib/api";
 	import GoalDetail from "$lib/components/layouts/GoalDetail.svelte";
-	import { userStore } from "$lib/stores/userStore.svelte.js";
-	import type { TaskData } from "$lib/types/forms.js";
-	import type { Goal, Task, User } from "$lib/types/types.js";
-	import { formatDate } from "$lib/utils/date";
-	import { mapTaskFormDataToEntity } from "$lib/utils/mapFormDataToEntry.js";
+	import { userStore } from "$lib/stores/userStore.svelte";
+	import type { TaskData } from "$lib/types/forms";
+	import type { Goal } from "$lib/types/types";
+	import { mapTaskFormDataToEntity } from "$lib/utils/mapFormDataToEntry";
 
 	let { data } = $props();
 	// Создаём реактивные копии
@@ -72,11 +71,6 @@
 <svelte:head>
 	<title>{goal.title}</title>
 </svelte:head>
-
-<div class="conteiner_title">
-	<h2>{goal.title}</h2>
-	<p>Срок: {formatDate(goal.createdAt)} - {formatDate(goal.deadline)}</p>
-</div>
 
 <GoalDetail
 	{goal}

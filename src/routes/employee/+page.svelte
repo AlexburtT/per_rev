@@ -9,7 +9,7 @@
 	<title>Dashboard</title>
 </svelte:head>
 
-<div class="conteiner_title">
+<div class="conteiner__title">
 	<h1>Dashboard</h1>
 </div>
 
@@ -44,14 +44,3 @@
 		description="Здесь находятся пройденные полностью Performance Review с вашим результатом и комментариями. Вывести общий бал, рекомендации"
 	/>
 </a>
-
-<style>
-	:global(.conteiner_title) {
-		display: flex;
-		flex-direction: column;
-		gap: 0.5rem;
-		/*align-items: center;*/
-		padding-bottom: 1rem;
-		border-bottom: 1px solid var(--text-tertiary);
-	}
-</style>

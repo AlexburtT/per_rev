@@ -1,12 +1,11 @@
 <!-- src/lib/components/GoalDetail.svelte -->
 <script lang="ts">
 	import { goto } from "$app/navigation";
+	import TasksList from "$lib/features/goal/TasksList.svelte";
 	import type { TaskData } from "$lib/types/forms";
 	import type { Goal, Task } from "$lib/types/types";
-	import {
-		goalStatusLabels,
-		taskStatusLabels,
-	} from "$lib/utils/statusLabels";
+	import { formatDate } from "$lib/utils/date";
+	import { goalStatusLabels } from "$lib/utils/statusLabels";
 	import Button from "../ui/Button.svelte";
 	import GoalTaskCard from "./GoalTaskCard.svelte";
 
@@ -32,43 +31,55 @@
 	const handleDelete = () => onDelete?.();
 </script>
 
-<!-- Описание цели -->
-<div class="goal__description-card">
-	<h3>Описание:</h3>
-	<p>{goal.description}</p>
-</div>
-
-<!-- Ожидаемый результат -->
-<div class="goal__expectation-card">
-	<h3>Ожидаемый результат:</h3>
-	<p>{goal.expectedResult || "Не указан"}</p>
-</div>
-
-<!-- Статус цели -->
-<div class="goal-status">
-	<strong>Статус:</strong>
-	<span class="status status--{goal.status}">
-		{goalStatusLabels[goal.status]}
-	</span>
-</div>
-
-{#if canEdit}
-	<div class="goal__actions">
-		<Button
-			title="Редактировать цель"
-			onClick={handleEdit}
-			variant="outline"
-		/>
-		<Button title="Удалить цель" onClick={handleDelete} variant="danger" />
+<div class="conteiner__title">
+	<div class="conteiner__title--header">
+		<h2>{goal.title}</h2>
+		<p>Срок: {formatDate(goal.createdAt)} - {formatDate(goal.deadline)}</p>
 	</div>
-{/if}
 
-<!-- Задачи -->
-<div class="goal__tasks">
-	<h3>Задачи:</h3>
-	<div class="goal__tasks--task">
-		<GoalTaskCard {tasks} canAddTask={canEdit} onTaskCreate={onAddTask} />
+	<!-- Статус цели -->
+	<div class="goal-status">
+		<strong>Статус:</strong>
+		<span class="status status--{goal.status}">
+			{goalStatusLabels[goal.status]}
+		</span>
 	</div>
+
+	{#if canEdit}
+		<div class="goal__actions">
+			<Button iconName="edit" isIconOnly onClick={handleEdit} />
+			<Button iconName="trash2" isIconOnly onClick={handleDelete} />
+		</div>
+	{/if}
+</div>
+
+<div class="goal__conteiner">
+	<div>
+		<div class="goal__description-card">
+			<h3>Описание:</h3>
+			<p>{goal.description}</p>
+		</div>
+
+		<!-- Ожидаемый результат -->
+		<div class="goal__expectation-card">
+			<h3>Ожидаемый результат:</h3>
+			<p>{goal.expectedResult || "Не указан"}</p>
+		</div>
+
+		<!-- Задачи -->
+		<div class="goal__tasks">
+			<h3>Задачи:</h3>
+			<div class="goal__tasks--task">
+				<GoalTaskCard
+					{tasks}
+					canAddTask={canEdit}
+					onTaskCreate={onAddTask}
+				/>
+			</div>
+		</div>
+	</div>
+
+	<TasksList />
 </div>
 
 <style>

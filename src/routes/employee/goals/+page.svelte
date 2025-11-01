@@ -9,7 +9,7 @@
 	<title>Мои цели</title>
 </svelte:head>
 
-<div class="conteiner_title">
+<div class="conteiner__title">
 	<h1>Мои цели</h1>
 </div>
 

@@ -2,7 +2,7 @@
 	<title>Самооценка</title>
 </svelte:head>
 
-<div class="conteiner_title">
+<div class="conteiner__title">
 	<h1>Самооценка</h1>
 </div>
 

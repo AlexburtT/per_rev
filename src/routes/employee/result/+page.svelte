@@ -2,7 +2,7 @@
 	<title>Результаты Rewiew</title>
 </svelte:head>
 
-<div class="conteiner_title">
+<div class="conteiner__title">
 	<h1>Результаты Rewiew</h1>
 </div>
 
