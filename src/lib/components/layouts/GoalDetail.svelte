@@ -122,6 +122,10 @@
 		color: var(--success);
 	}
 
+	.goal__actions {
+		display: flex;
+	}
+
 	.goal__tasks {
 		padding: 1rem;
 

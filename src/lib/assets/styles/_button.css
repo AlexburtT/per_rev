@@ -1,4 +1,7 @@
 .btn {
+	display: flex;
+	justify-content: center;
+	gap: 0.5rem;
 	width: 100%;
 	padding: 0.5rem 3rem;
 	border-radius: 0.3rem;
@@ -6,6 +9,11 @@
 	cursor: pointer;
 	border: 1px solid transparent;
 	transition: var(--transition);
+
+	svg {
+		width: 1.5rem;
+		height: 1.5rem;
+	}
 }
 .btn.primary {
 	background-color: var(--primary);

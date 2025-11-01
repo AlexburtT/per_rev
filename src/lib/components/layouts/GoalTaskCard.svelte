@@ -11,9 +11,15 @@
 		tasks?: Task[];
 		canAddTask?: boolean;
 		onTaskCreate?: (data: TaskData) => void;
+		onTaskComplete?: (taskId: string) => void;
 	}
 
-	const { tasks = [], canAddTask = false, onTaskCreate }: Props = $props();
+	const {
+		tasks = [],
+		canAddTask = false,
+		onTaskCreate,
+		onTaskComplete,
+	}: Props = $props();
 
 	let isDialogOpen = $state(false);
 
@@ -58,6 +64,17 @@
 					</span>
 				{/if}
 			</div>
+			{#if task.status !== "completed"}
+				<Button
+					title="Завершить задачу"
+					iconName="done"
+					iconPosition="right"
+					variant="primary"
+					onClick={() => {
+						() => onTaskComplete?.(task.id);
+					}}
+				/>
+			{/if}
 		</div>
 	{/each}
 	{#if canAddTask && tasks.length < 3}
