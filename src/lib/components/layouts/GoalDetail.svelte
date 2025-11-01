@@ -2,29 +2,32 @@
 <script lang="ts">
 	import { goto } from "$app/navigation";
 	import TasksList from "$lib/features/goal/TasksList.svelte";
-	import type { TaskData } from "$lib/types/forms";
 	import type { Goal, Task } from "$lib/types/types";
 	import { formatDate } from "$lib/utils/date";
 	import { goalStatusLabels } from "$lib/utils/statusLabels";
+	import type { Snippet } from "svelte";
 	import Button from "../ui/Button.svelte";
-	import GoalTaskCard from "./GoalTaskCard.svelte";
 
 	interface Props {
+		children: Snippet<[]>;
 		goal: Goal;
-		tasks?: Task[];
 		canEdit?: boolean;
-		onAddTask?: (data: TaskData) => void;
 		onEdit?: () => void;
 		onDelete?: () => void;
+		onSubmitForWork: () => void;
+		onSubmitForSelfReview: () => void;
+		allCompleted: boolean;
 	}
 
-	const {
+	let {
+		children,
 		goal,
-		tasks,
 		canEdit = false,
-		onAddTask,
 		onEdit,
 		onDelete,
+		onSubmitForWork,
+		onSubmitForSelfReview,
+		allCompleted = false,
 	}: Props = $props();
 
 	const handleEdit = () => onEdit?.();
@@ -37,7 +40,21 @@
 		<p>Срок: {formatDate(goal.createdAt)} - {formatDate(goal.deadline)}</p>
 	</div>
 
-	<!-- Статус цели -->
+	{#if goal.status === "draft" && goal.taskIds.length === 3}
+		<Button
+			title="Принять в работу"
+			variant="primary"
+			onClick={onSubmitForWork}
+		/>
+	{/if}
+
+	{#if goal.status === "submitted" && allCompleted}
+		<Button
+			title="Отправить на самооценку"
+			variant="primary"
+			onClick={onSubmitForSelfReview}
+		/>
+	{/if}
 	<div class="goal-status">
 		<strong>Статус:</strong>
 		<span class="status status--{goal.status}">
@@ -70,11 +87,7 @@
 		<div class="goal__tasks">
 			<h3>Задачи:</h3>
 			<div class="goal__tasks--task">
-				<GoalTaskCard
-					{tasks}
-					canAddTask={canEdit}
-					onTaskCreate={onAddTask}
-				/>
+				{@render children()}
 			</div>
 		</div>
 	</div>

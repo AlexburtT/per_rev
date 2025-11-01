@@ -2,6 +2,7 @@
 	import { goto } from "$app/navigation";
 	import * as api from "$lib/api";
 	import GoalDetail from "$lib/components/layouts/GoalDetail.svelte";
+	import GoalTaskCard from "$lib/components/layouts/GoalTaskCard.svelte";
 	import { userStore } from "$lib/stores/userStore.svelte";
 	import type { TaskData } from "$lib/types/forms";
 	import type { Goal } from "$lib/types/types";
@@ -66,6 +67,67 @@
 			alert("Не удалось удалить цель.");
 		}
 	};
+
+	const handleTaskComplete = async (taskId: string) => {
+		// 1. Находим задачу в локальном массиве задач
+		const task = tasks.find((t) => t.id === taskId);
+		if (!task) return;
+
+		// 2. Обновляем статус задачи
+		const updatedTask = {
+			...task,
+			status: "completed" as const,
+			completedAt: new Date().toISOString(),
+		};
+
+		await api.tasks.createTask(updatedTask); // сохраняем в IndexedDB
+
+		// 3. Обновляем локальный массив задач (если он управляется через $state)
+		tasks = tasks.map((t) => (t.id === taskId ? updatedTask : t));
+	};
+
+	const handleSubmitForWork = async () => {
+		if (goal.taskIds.length !== 3) {
+			alert("Цель можно принять в работу только с 3 задачами.");
+			return;
+		}
+		if (goal.status !== "draft") return;
+
+		const updatedGoal: Goal = {
+			...$state.snapshot(goal), // ← ключевое: снимаем реактивность!
+			status: "submitted",
+		};
+
+		await api.goals.saveGoal(updatedGoal);
+		goal = updatedGoal;
+	};
+
+	const handleSubmitForSelfReview = async () => {
+		const allCompleted = goal.taskIds.every((id) => {
+			const t = tasks.find((task) => task.id === id);
+			return t?.status === "completed";
+		});
+
+		if (!allCompleted) {
+			alert("Все задачи должны быть завершены.");
+			return;
+		}
+		if (goal.status !== "submitted") return;
+
+		const updatedGoal: Goal = {
+			...$state.snapshot(goal),
+			status: "self_reviewed",
+		};
+		await api.goals.saveGoal(updatedGoal);
+		goal = updatedGoal;
+	};
+
+	const allCompleted = $derived(
+		goal.taskIds.every((id) => {
+			const task = tasks.find((t) => t.id === id);
+			return task?.status === "completed";
+		})
+	);
 </script>
 
 <svelte:head>
@@ -74,9 +136,17 @@
 
 <GoalDetail
 	{goal}
-	{tasks}
 	{canEdit}
-	onAddTask={handleAddTask}
 	onEdit={handleEdit}
 	onDelete={handleDelete}
-/>
+	onSubmitForWork={handleSubmitForWork}
+	onSubmitForSelfReview={handleSubmitForSelfReview}
+	{allCompleted}
+>
+	<GoalTaskCard
+		{tasks}
+		canAddTask={canEdit}
+		onTaskCreate={handleAddTask}
+		onTaskComplete={handleTaskComplete}
+	/>
+</GoalDetail>

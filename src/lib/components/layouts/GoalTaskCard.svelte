@@ -8,10 +8,10 @@
 	import type { TaskData } from "$lib/types/forms";
 
 	interface Props {
-		tasks?: Task[];
-		canAddTask?: boolean;
-		onTaskCreate?: (data: TaskData) => void;
-		onTaskComplete?: (taskId: string) => void;
+		tasks: Task[];
+		canAddTask: boolean;
+		onTaskCreate: (data: TaskData) => void;
+		onTaskComplete: (taskId: string) => void;
 	}
 
 	const {
@@ -70,9 +70,7 @@
 					iconName="done"
 					iconPosition="right"
 					variant="primary"
-					onClick={() => {
-						() => onTaskComplete?.(task.id);
-					}}
+					onClick={() => onTaskComplete(task.id)}
 				/>
 			{/if}
 		</div>
