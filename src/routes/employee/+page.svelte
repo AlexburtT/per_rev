@@ -3,6 +3,13 @@
 	import { userStore } from "$lib/stores/userStore.svelte.js";
 
 	let { data } = $props();
+	// Фильтруем цели
+	const activeGoals = userStore.goals.filter(
+		(g) => g.status === "draft" || g.status === "submitted"
+	);
+	const selfReviewGoals = userStore.goals.filter(
+		(g) => g.status === "self_reviewed"
+	);
 </script>
 
 <svelte:head>
@@ -17,7 +24,7 @@
 	<Card
 		icon="target"
 		title="Цели и задачи"
-		description={`Всего целей: ${userStore.goals.length}`}
+		description={`Активных целей: ${activeGoals.length}`}
 	></Card>
 </a>
 
@@ -25,7 +32,7 @@
 	<Card
 		icon="thumbsUp"
 		title="Самооценка по целям"
-		description="Здесь находяится список ваших целей и самооценка по ним. Вывести общий бал, рекомендации"
+		description={`Готовы к оценке: ${selfReviewGoals.length}`}
 	/>
 </a>
 
