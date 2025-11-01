@@ -44,7 +44,14 @@ export interface Task {
 
 // === Цели (пишет сотрудник) ===
 
-export type GoalStatus = "draft" | "submitted" | "reviewed";
+export type GoalStatus =
+	| "draft"
+	| "submitted"
+	| "self_reviewed"
+	| "peer_review"
+	| "manager_review"
+	| "completed"
+	| "cancelled";
 
 export interface Goal {
 	id: string;

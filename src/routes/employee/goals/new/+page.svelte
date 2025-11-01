@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { goto } from "$app/navigation";
-	import { saveGoal } from "$lib/api/goals.js";
-	import { createTask } from "$lib/api/tasks.js";
+	import * as api from "$lib/api";
 	import GoalForm from "$lib/features/goal/GoalForm.svelte";
 	import TasksList from "$lib/features/goal/TasksList.svelte";
 	import { userStore } from "$lib/stores/userStore.svelte.js";
@@ -38,7 +37,7 @@
 			const plainTasks = $state.snapshot(draftTasks);
 			const taskIds: string[] = [];
 			for (const task of plainTasks) {
-				await createTask(task); // ← теперь task — обычный объект
+				await api.tasks.createTask(task); // ← теперь task — обычный объект
 				taskIds.push(task.id);
 			}
 
@@ -50,7 +49,7 @@
 				taskIds
 			);
 
-			await saveGoal(goal);
+			await api.goals.saveGoal(goal);
 			userStore.goals = [...userStore.goals, goal];
 			await goto("#/employee/goals");
 		} catch (err) {

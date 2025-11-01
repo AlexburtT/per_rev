@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { goto } from "$app/navigation";
-	import { removeGoal, saveGoal } from "$lib/api/goals.js";
-	import { createTask, removeTask } from "$lib/api/tasks.js";
+	import * as api from "$lib/api";
 	import GoalDetail from "$lib/components/layouts/GoalDetail.svelte";
 	import { userStore } from "$lib/stores/userStore.svelte.js";
 	import type { TaskData } from "$lib/types/forms.js";
@@ -27,14 +26,14 @@
 		try {
 			// 1. Создаём задачу
 			const newTask = mapTaskFormDataToEntity(taskData, user);
-			await createTask(newTask);
+			await api.tasks.createTask(newTask);
 
 			// 2. Обновляем цель: добавляем taskId
 			const updatedGoal: Goal = {
 				...goal,
 				taskIds: [...goal.taskIds, newTask.id],
 			};
-			await saveGoal(updatedGoal);
+			await api.goals.saveGoal(updatedGoal);
 
 			// 3. Обновляем локальное состояние (без перезагрузки!)
 			tasks = [...tasks, newTask];
@@ -56,10 +55,10 @@
 		try {
 			// Удаляем все задачи
 			for (const taskId of goal.taskIds) {
-				await removeTask(taskId);
+				await api.tasks.removeTask(taskId);
 			}
 			// Удаляем цель
-			await removeGoal(goal.id);
+			await api.goals.removeGoal(goal.id);
 			userStore.goals = userStore.goals.filter((g) => g.id !== goal.id);
 			// Перенаправляем
 			await goto("#/employee/goals");

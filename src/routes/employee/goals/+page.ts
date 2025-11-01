@@ -1,15 +1,15 @@
 // src/routes/employee/goals/+page.ts
 import type { PageLoad } from "./$types";
-import { goalApi, taskApi } from "$lib/db";
+import * as api from "$lib/api";
 import type { Task } from "$lib/types/types";
 
 export const load: PageLoad = async ({ parent }) => {
 	const { user } = await parent();
-	const goals = await goalApi.getByAuthor(user.id);
+	const goals = await api.goals.getByAuthor(user.id);
 
 	// Загружаем ВСЕ задачи, связанные с целями
 	const allTaskIds = goals.flatMap((goal) => goal.taskIds);
-	const allTasks = await taskApi.getByIds(allTaskIds);
+	const allTasks = await api.tasks.getByIds(allTaskIds);
 
 	// Создаём маппинг taskId → task
 	const taskMap = new Map<string, Task>();

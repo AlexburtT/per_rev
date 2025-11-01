@@ -1,12 +1,12 @@
 import { error } from "@sveltejs/kit";
 import type { PageLoad } from "./$types";
-import { cycleApi } from "$lib/db";
+import * as api from "$lib/api";
 
 export const load: PageLoad = async ({ parent }) => {
 	const { user } = await parent();
 
 	// Получаем активный цикл
-	const activeCycle = await cycleApi.getActive(); // ← возвращает только "active"
+	const activeCycle = await api.cycles.getActiveCycle(); // ← возвращает только "active"
 
 	if (!activeCycle) {
 		throw error(
