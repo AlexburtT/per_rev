@@ -1,6 +1,6 @@
 // $lib/stores/userStore.svelte
 import * as api from "$lib/api";
-import type { User, Goal } from "$lib/types/types";
+import type { User, Goal, PeerAssignment } from "$lib/types/types";
 import { autoSubmitDraftGoals } from "$lib/utils/goalLifecycle";
 
 export const userStore = $state({
@@ -8,6 +8,7 @@ export const userStore = $state({
 	isLoading: false,
 	userList: [] as User[],
 	goals: [] as Goal[],
+	peerAssignments: [] as PeerAssignment[],
 });
 
 // --- Пользователи ---
@@ -49,6 +50,12 @@ export async function loadUserGoals(userId: string) {
 
 	userStore.goals = goals;
 	return goals;
+}
+
+export async function loadPeerAssignments(reviewerId: string) {
+	userStore.peerAssignments = await api.peerAssignment.getByReviewer(
+		reviewerId
+	);
 }
 
 // --- CRUD для целей (уже обсуждали) ---

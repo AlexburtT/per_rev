@@ -1,7 +1,11 @@
-// src/routes/employee/+layout.ts
 import type { LayoutLoad } from "./$types";
-
-import { loadUserGoals, userStore } from "$lib/stores/userStore.svelte";
+import {
+	loadUserGoals,
+	userStore,
+	loadUsersList,
+	loadPeerAssignments,
+} from "$lib/stores/userStore.svelte";
+import * as api from "$lib/api";
 
 export const load: LayoutLoad = async () => {
 	const user = userStore.currentUser;
@@ -11,8 +15,12 @@ export const load: LayoutLoad = async () => {
 		throw new Error("Доступ запрещён");
 	}
 
-	// Загружаем цели — они нужны и на dashboard, и на /goals
+	// Загружаем всех пользователей (нужны для поиска руководителя и коллег)
+	await loadUsersList();
+
+	// Загружаем цели сотрудника
 	const goals = await loadUserGoals(user.id);
+	await loadPeerAssignments(user.id); // ← загружаем назначения
 
 	// Находим ФИО руководителя
 	const manager = user.managerId

@@ -14,6 +14,10 @@
 	const selfReviewGoals = $derived(
 		userStore.goals.filter((g) => g.status === "self_reviewed")
 	);
+
+	const pendingPeerReviews = $derived(
+		userStore.peerAssignments.filter((a) => a.status === "pending")
+	);
 </script>
 
 <svelte:head>
@@ -44,7 +48,7 @@
 	<Card
 		icon="users"
 		title="Rewiew коллег"
-		description="Здесь находятся задачи по оценке коллег, сейчас их нет. Количество сколько коллег необхолдимо проревьюить"
+		description={`Назначено: ${pendingPeerReviews.length} коллег для их оценки`}
 	/>
 </a>
 
