@@ -27,7 +27,7 @@
 </script>
 
 <header class="app-header">
-	<a href="/" onclick={() => clearUser()}>
+	<a href="/per_rev/" onclick={() => clearUser()}>
 		<img src={logo} alt="Логотип Performance Review" class="logo" />
 	</a>
 	{#if showBreadcrumbs}
