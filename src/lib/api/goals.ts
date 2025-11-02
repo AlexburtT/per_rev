@@ -26,13 +26,13 @@ export async function getByCycle(cycleId: string): Promise<Goal[]> {
 /**
  * Создать или обновить цель
  */
-export async function save(goal: Goal): Promise<void> {
+export async function saveGoal(goal: Goal): Promise<void> {
 	await goalApi.put(goal);
 }
 
 /**
  * Удалить цель по ID
  */
-export async function remove(goalId: string): Promise<void> {
+export async function removeGoal(goalId: string): Promise<void> {
 	await goalApi.delete(goalId);
 }

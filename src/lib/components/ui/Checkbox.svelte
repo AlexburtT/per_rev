@@ -1,21 +1,27 @@
 <script lang="ts">
 	interface Props {
-		name: string;
+		name?: string;
 		label?: string;
 		checked?: boolean;
 		disabled?: boolean;
 		required?: boolean;
+		onChange?: (checked: boolean) => void;
 	}
 
-	const {
+	let {
 		name,
 		label,
 		checked = false,
 		disabled = false,
 		required = false,
-	} = $props();
-
+		onChange,
+	}: Props = $props();
 	let internalChecked = $state(checked);
+
+	function handleChange(e: Event) {
+		internalChecked = (e.target as HTMLInputElement).checked;
+		onChange?.(internalChecked);
+	}
 </script>
 
 <label class="checkbox">
@@ -24,11 +30,12 @@
 		{name}
 		{disabled}
 		{required}
-		bind:checked={internalChecked}
+		checked={internalChecked}
+		onchange={handleChange}
 		class="checkbox__input"
 	/>
 	<span class="checkbox__custom">
-		{#if internalChecked}
+		{#if checked === true}
 			<svg
 				width="12"
 				height="12"

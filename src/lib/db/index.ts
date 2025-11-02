@@ -1,5 +1,4 @@
 // src/lib/db/index.ts
-
 import {
 	getAll,
 	getOne,
@@ -22,7 +21,6 @@ import type {
 	PotentialAssessment,
 	EmployeeReview,
 } from "$lib/types/types";
-import { getById } from "$lib/api/goals";
 
 // --- Users ---
 export const userApi = {
@@ -82,6 +80,10 @@ export const peerAssignmentApi = {
 		getByIndex(STORES.PEER_ASSIGNMENTS, "byEmployee", employeeId),
 	getByCycle: (cycleId: string) =>
 		getByIndex(STORES.PEER_ASSIGNMENTS, "byCycle", cycleId),
+	getById: async (id: string): Promise<PeerAssignment | undefined> => {
+		const all = await getAll(STORES.PEER_ASSIGNMENTS);
+		return all.find((item) => item.id === id);
+	},
 	put: (assignment: PeerAssignment) =>
 		put(STORES.PEER_ASSIGNMENTS, assignment),
 };
@@ -99,6 +101,10 @@ export const selfReviewApi = {
 		);
 		return reviews.find((r) => r.cycleId === cycleId);
 	},
+
+	getByGoalId: (goalId: string) =>
+		getByIndex(STORES.SELF_REVIEWS, "byGoalId", goalId),
+
 	put: (review: SelfReview) => put(STORES.SELF_REVIEWS, review),
 };
 

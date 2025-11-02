@@ -38,6 +38,20 @@ body {
 	padding-inline: clamp(1rem, 5vw, 3rem);
 }
 
+.conteiner__title {
+	display: grid;
+	grid-template-columns: 5fr 1fr auto;
+	align-items: center;
+	padding-bottom: 1rem;
+	border-bottom: 1px solid var(--text-tertiary);
+}
+
+.goal__conteiner {
+	display: grid;
+	grid-template-columns: 2fr 1fr;
+	gap: 1rem;
+}
+
 .text-content {
 	max-width: 70ch;
 	line-height: 1.6;

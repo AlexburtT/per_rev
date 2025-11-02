@@ -46,6 +46,7 @@ function openDatabase(): Promise<IDBDatabase> {
 				});
 				store.createIndex("byEmployee", "employeeId");
 				store.createIndex("byCycle", "cycleId");
+				store.createIndex("byGoalId", "goalId");
 			}
 			if (!db.objectStoreNames.contains(STORES.PEER_ASSIGNMENTS)) {
 				const store = db.createObjectStore(STORES.PEER_ASSIGNMENTS, {

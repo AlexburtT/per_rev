@@ -25,9 +25,9 @@ const config = {
 			type: 'hash'
 		},
 		// Для Github Pages раскомментируйте следующую строку
-		paths: {
-			base: '/per_rev'
-		}
+		//paths: {
+		//	base: '/per_rev'
+		//}
 	}
 };
 

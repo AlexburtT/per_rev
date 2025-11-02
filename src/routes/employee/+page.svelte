@@ -1,16 +1,30 @@
 <script lang="ts">
 	import Card from "$lib/components/ui/Card.svelte";
+	import { userStore } from "$lib/stores/userStore.svelte.js";
 
 	let { data } = $props();
 
-	const { goals } = data;
+	// Фильтруем цели
+	const activeGoals = $derived(
+		userStore.goals.filter(
+			(g) => g.status === "draft" || g.status === "submitted"
+		)
+	);
+
+	const selfReviewGoals = $derived(
+		userStore.goals.filter((g) => g.status === "self_reviewed")
+	);
+
+	const pendingPeerReviews = $derived(
+		userStore.peerAssignments.filter((a) => a.status === "pending")
+	);
 </script>
 
 <svelte:head>
 	<title>Dashboard</title>
 </svelte:head>
 
-<div class="conteiner_title">
+<div class="conteiner__title">
 	<h1>Dashboard</h1>
 </div>
 
@@ -18,7 +32,7 @@
 	<Card
 		icon="target"
 		title="Цели и задачи"
-		description={`Всего целей: ${goals.length}`}
+		description={`Активных целей: ${activeGoals.length}`}
 	></Card>
 </a>
 
@@ -26,7 +40,7 @@
 	<Card
 		icon="thumbsUp"
 		title="Самооценка по целям"
-		description="Здесь находяится список ваших целей и самооценка по ним. Вывести общий бал, рекомендации"
+		description={`Готовы к оценке: ${selfReviewGoals.length}`}
 	/>
 </a>
 
@@ -34,7 +48,7 @@
 	<Card
 		icon="users"
 		title="Rewiew коллег"
-		description="Здесь находятся задачи по оценке коллег, сейчас их нет. Количество сколько коллег необхолдимо проревьюить"
+		description={`Назначено: ${pendingPeerReviews.length} коллег для их оценки`}
 	/>
 </a>
 
@@ -45,14 +59,3 @@
 		description="Здесь находятся пройденные полностью Performance Review с вашим результатом и комментариями. Вывести общий бал, рекомендации"
 	/>
 </a>
-
-<style>
-	:global(.conteiner_title) {
-		display: flex;
-		flex-direction: column;
-		gap: 0.5rem;
-		/*align-items: center;*/
-		padding-bottom: 1rem;
-		border-bottom: 1px solid var(--text-tertiary);
-	}
-</style>

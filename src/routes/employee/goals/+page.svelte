@@ -2,22 +2,26 @@
 	import Card from "$lib/components/ui/Card.svelte";
 
 	let { data } = $props();
-	const { goalsWithTasks: goals } = data;
+	const goals = data.goalsWithTasks;
+	// Фильтруем: только draft и submitted
+	const activeGoals = data.goalsWithTasks.filter(
+		(goal) => goal.status === "draft" || goal.status === "submitted"
+	);
 </script>
 
 <svelte:head>
 	<title>Мои цели</title>
 </svelte:head>
 
-<div class="conteiner_title">
+<div class="conteiner__title">
 	<h1>Мои цели</h1>
 </div>
 
-{#if goals.length === 0}
+{#if activeGoals.length === 0}
 	<p>У вас пока нет целей.</p>
 {:else}
 	<div class="goals-grid">
-		{#each goals as goal}
+		{#each activeGoals as goal}
 			<a href="#/employee/goals/{goal.id}" class="goal-link">
 				<Card
 					title={goal.title}
@@ -33,7 +37,7 @@
 				</Card>
 			</a>
 		{/each}
-		{#if goals.length < 5}
+		{#if activeGoals.length < 5}
 			<a href="#/employee/goals/new" class="btn primary">+ Новая цель</a>
 		{/if}
 	</div>

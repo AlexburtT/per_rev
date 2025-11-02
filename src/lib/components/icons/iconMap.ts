@@ -1,5 +1,6 @@
 import ChevronDown from "./Chevron_down.svelte";
 import ChevronUp from "./Chevron_up.svelte";
+import Done from "./Done.svelte";
 import Edit from "./Edit.svelte";
 import Icon from "./Icon.svelte";
 import Icon1 from "./Icon_1.svelte";
@@ -28,4 +29,5 @@ export const iconMap = {
 	trello: Trello,
 	trendingUp: TrendingUp,
 	users: Users,
+	done: Done,
 };

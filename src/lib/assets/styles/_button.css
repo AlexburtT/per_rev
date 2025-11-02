@@ -1,4 +1,7 @@
 .btn {
+	display: flex;
+	justify-content: center;
+	gap: 0.5rem;
 	width: 100%;
 	padding: 0.5rem 3rem;
 	border-radius: 0.3rem;
@@ -6,6 +9,11 @@
 	cursor: pointer;
 	border: 1px solid transparent;
 	transition: var(--transition);
+
+	svg {
+		width: 1.5rem;
+		height: 1.5rem;
+	}
 }
 .btn.primary {
 	background-color: var(--primary);
@@ -16,15 +24,34 @@
 	border-color: var(--text-disabled);
 	color: var(--text);
 }
+.btn.danger {
+	background: transparent;
+	border-color: var(--danger);
+	color: var(--surface);
+}
 .btn.secondary {
 	background-color: var(--primary-light);
 	color: var(--divider);
 }
-.btn--disabled {
+.btn__disabled {
 	opacity: 0.6;
 	cursor: not-allowed;
 }
 
-.btn:hover {
+.btn:hover:not(.btn--disabled) {
 	background-color: var(--primary-medium);
+}
+
+.btn.btn__icon-only {
+	width: auto;
+	height: auto;
+	padding: 0.5rem;
+	background: transparent !important;
+	border: none !important;
+	color: var(--text);
+}
+
+.btn__icon-only:hover:not(.btn--disabled) {
+	background: transparent !important;
+	color: var(--primary);
 }
