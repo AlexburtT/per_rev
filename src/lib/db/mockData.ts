@@ -117,6 +117,8 @@ export async function initMockData() {
 				specialization: emp.specialization,
 				status: randomElement(["planned", "in-progress"]),
 				createdAt: randomDate(taskStartDate, taskEndDate),
+				expectedResult: "",
+				deadline: "",
 			};
 			await taskApi.put(task);
 			tasks.push(task);
@@ -158,29 +160,6 @@ export async function initMockData() {
 				createdAt: new Date().toISOString(),
 			};
 			await goalApi.put(goal);
-		}
-	}
-
-	// === 6. Назначение оценок коллег (PeerAssignment) ===
-	for (const reviewer of employees) {
-		const possibleReviewees = employees.filter((e) => e.id !== reviewer.id);
-		if (possibleReviewees.length === 0) continue;
-
-		const numToReview = randomInt(2, Math.min(3, possibleReviewees.length));
-		const reviewees = [...possibleReviewees]
-			.sort(() => 0.5 - Math.random())
-			.slice(0, numToReview);
-
-		for (const reviewee of reviewees) {
-			const assignment: PeerAssignment = {
-				id: `pa-${reviewer.id}-${reviewee.id}`,
-				cycleId: cycle.id,
-				reviewerId: reviewer.id,
-				employeeId: reviewee.id,
-				status: "pending",
-				assignedAt: new Date().toISOString(),
-			};
-			await peerAssignmentApi.put(assignment);
 		}
 	}
 

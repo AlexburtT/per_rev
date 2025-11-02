@@ -4,8 +4,29 @@
 	import { taskStatusLabels } from "$lib/utils/statusLabels";
 	import { formatDate } from "$lib/utils/date";
 	import Button from "../ui/Button.svelte";
+	import TaskCreatorDialog from "$lib/features/goal/TaskCreatorDialog.svelte";
+	import type { TaskData } from "$lib/types/forms";
 
-	export let tasks: Task[] = [];
+	interface Props {
+		tasks: Task[];
+		canAddTask: boolean;
+		onTaskCreate: (data: TaskData) => void;
+		onTaskComplete: (taskId: string) => void;
+	}
+
+	const {
+		tasks = [],
+		canAddTask = false,
+		onTaskCreate,
+		onTaskComplete,
+	}: Props = $props();
+
+	let isDialogOpen = $state(false);
+
+	const handleTaskCreate = (taskData: TaskData) => {
+		onTaskCreate?.(taskData);
+		isDialogOpen = false;
+	};
 </script>
 
 {#if tasks.length === 0}
@@ -43,12 +64,31 @@
 					</span>
 				{/if}
 			</div>
+			{#if task.status !== "completed"}
+				<Button
+					title="Завершить задачу"
+					iconName="done"
+					iconPosition="right"
+					variant="primary"
+					onClick={() => onTaskComplete(task.id)}
+				/>
+			{/if}
 		</div>
 	{/each}
-	{#if tasks.length < 3}
-		<Button title="Добавить ключевую задачу" variant="secondary" />
+	{#if canAddTask && tasks.length < 3}
+		<Button
+			title="Добавить ключевую задачу"
+			variant="secondary"
+			onClick={() => (isDialogOpen = true)}
+		/>
 	{/if}
 {/if}
+
+<TaskCreatorDialog
+	open={isDialogOpen}
+	onCreate={handleTaskCreate}
+	onClose={() => (isDialogOpen = false)}
+/>
 
 <style>
 	.no-tasks {

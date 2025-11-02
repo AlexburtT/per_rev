@@ -10,7 +10,6 @@ import type {
 	RatingCategory,
 	EmployeeReviewStatus,
 } from "$lib/types/types";
-// src/lib/utils/labels.ts
 
 // === Статусы задач ===
 export const taskStatusLabels: Record<TaskStatus, string> = {
@@ -22,9 +21,13 @@ export const taskStatusLabels: Record<TaskStatus, string> = {
 
 // === Статусы целей ===
 export const goalStatusLabels: Record<GoalStatus, string> = {
-	draft: "В работе",
-	submitted: "Отправлена на оценку",
-	reviewed: "Оценена",
+	draft: "Черновик",
+	submitted: "В работе",
+	self_reviewed: "Самооценка",
+	peer_review: "Оценка коллег",
+	manager_review: "Оценка руководителя",
+	completed: "Завершена",
+	cancelled: "Отменена",
 };
 
 // === Роли пользователей ===

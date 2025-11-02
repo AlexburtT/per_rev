@@ -30,11 +30,11 @@ export type TaskStatus = "planned" | "in-progress" | "completed" | "cancelled";
 export interface Task {
 	id: string;
 	title: string;
-	description?: string;
-	expectedResult?: string;
-	assignedTo: string; // User.id
-	assignedBy: string; // User.id (руководитель)
-	department: string; // отдел, к которому относится задача
+	description: string;
+	expectedResult: string;
+	assignedTo?: string; // User.id
+	assignedBy?: string; // User.id (руководитель)
+	department?: string; // отдел, к которому относится задача
 	specialization?: string; // специализация (опционально)
 	status: TaskStatus;
 	createdAt: string; // ISO
@@ -44,7 +44,14 @@ export interface Task {
 
 // === Цели (пишет сотрудник) ===
 
-export type GoalStatus = "draft" | "submitted" | "reviewed";
+export type GoalStatus =
+	| "draft"
+	| "submitted"
+	| "self_reviewed"
+	| "peer_review"
+	| "manager_review"
+	| "completed"
+	| "cancelled";
 
 export interface Goal {
 	id: string;
@@ -53,7 +60,6 @@ export interface Goal {
 	expectedResult: string;
 	deadline: string; // YYYY-MM-DD
 	taskIds: string[]; // ссылки на Task.id (до 3 задач)
-	tasks: Task[]; // для удобства
 	authorId: string; // User.id — кто создал цель
 	cycleId: string; // Cycle.id
 	status: GoalStatus;

@@ -3,15 +3,16 @@
 	import Button from "./Button.svelte";
 
 	export interface Props {
+		name: string;
 		submitLabel: string;
-		onSubmit?: () => void;
+		onSubmit?: (event: Event) => void;
 		children?: Snippet<[]>;
 	}
 
-	let { children, submitLabel, onSubmit }: Props = $props();
+	let { name, children, submitLabel, onSubmit }: Props = $props();
 </script>
 
-<form class="form" onsubmit={onSubmit}>
+<form {name} class="form" onsubmit={onSubmit}>
 	{#if children}
 		<div class="form-fields">
 			{@render children()}

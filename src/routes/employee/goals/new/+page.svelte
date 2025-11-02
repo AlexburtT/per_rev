@@ -1,104 +1,79 @@
 <script lang="ts">
-	import Button from "$lib/components/ui/Button.svelte";
-	import Form from "$lib/components/ui/Form.svelte";
-	import Input from "$lib/components/ui/Input.svelte";
-	import Dialog from "$lib/components/layouts/Dialog.svelte";
-	const fields = [
-		{ name: "title", label: "Название", type: "text", required: true },
-		{
-			name: "description",
-			label: "Описание",
-			type: "textarea",
-			required: true,
-		},
-		{ name: "result", label: "Ожидаемый результат", type: "textarea" },
-		{ name: "dateStart", label: "Начало реализации", type: "date" },
-		{ name: "dateEnd", label: "Окончание реализации", type: "date" },
-	];
+	import { goto } from "$app/navigation";
+	import * as api from "$lib/api";
+	import GoalForm from "$lib/features/goal/GoalForm.svelte";
+	import TasksList from "$lib/features/goal/TasksList.svelte";
+	import { userStore } from "$lib/stores/userStore.svelte.js";
+	import type { GoalData, TaskData } from "$lib/types/forms.js";
+	import type { Task, Cycle, User } from "$lib/types/types.js";
+	import {
+		mapGoalFormDataToEntity,
+		mapTaskFormDataToEntity,
+	} from "$lib/utils/mapFormDataToEntry.js";
 
-	const fieldFormDialog = [
-		{ name: "title", label: "Название", type: "text", required: true },
-		{
-			name: "description",
-			label: "Описание",
-			type: "textarea",
-			required: true,
-		},
-		{ name: "result", label: "Ожидаемый результат", type: "textarea" },
-		{ name: "dateStart", label: "Начало реализации", type: "date" },
-		{ name: "dateEnd", label: "Окончание реализации", type: "date" },
-	];
+	let { data } = $props();
+	const user: User = data.user;
+	const activeCycle: Cycle = data.activeCycle;
 
-	// Инициализируем formData с пустыми значениями
-	let formData = $state(Object.fromEntries(fields.map((f) => [f.name, ""])));
+	let draftTasks = $state<Task[]>([]);
 
-	const handleSubmit = async () => {
-		const goal = {
-			id: crypto.randomUUID(),
-			...formData,
-			createdAt: new Date().toISOString(),
-		};
-		console.log("📥 Сохраняем:", goal);
-		// await saveGoal(goal);
+	// ✅ Чистая функция: обработка создания задачи
+	const handleTaskCreate = (formData: TaskData) => {
+		if (draftTasks.length >= 3) return;
+		const task = mapTaskFormDataToEntity(formData, user);
+		draftTasks = [...draftTasks, task];
 	};
 
-	const handleSubmitForDialogForm = async () => {
-		const task = {
-			id: crypto.randomUUID(),
-			...formData,
-			createdAt: new Date().toISOString(),
-		};
-		console.log("📥 Сохраняем:", task);
-		isDialogOpen = false;
-		// await saveGoal(goal);
+	//Сохранение цели
+	const handleGoalSubmit = async (goalData: GoalData) => {
+		if (draftTasks.length === 0) {
+			alert("Добавьте хотя бы одну ключевую задачу.");
+			return;
+		}
+
+		try {
+			// Сохраняем задачи
+			// Делаем снапшот — получаем обычные объекты
+			const plainTasks = $state.snapshot(draftTasks);
+			const taskIds: string[] = [];
+			for (const task of plainTasks) {
+				await api.tasks.createTask(task); // ← теперь task — обычный объект
+				taskIds.push(task.id);
+			}
+
+			// Создаём цель
+			const goal = mapGoalFormDataToEntity(
+				goalData,
+				user,
+				activeCycle,
+				taskIds
+			);
+
+			await api.goals.saveGoal(goal);
+			userStore.goals = [...userStore.goals, goal];
+			await goto("#/employee/goals");
+		} catch (err) {
+			console.error("Ошибка сохранения:", err);
+			alert("Не удалось сохранить цель.");
+		}
 	};
-
-	let isDialogOpen = $state(false);
-
-	function openDialog() {
-		isDialogOpen = true;
-	}
-
-	function closeDialog() {
-		isDialogOpen = false;
-	}
 </script>
 
 <svelte:head>
 	<title>Новая цель</title>
 </svelte:head>
 
-<div class="conteiner_title">
+<div class="conteiner__title">
 	<h1>Новая цель</h1>
 </div>
 
-<Form onSubmit={handleSubmit} submitLabel="Сохранить цель">
-	{#each fields as field}
-		<Input
-			name={field.name}
-			label={field.label}
-			type={field.type}
-			required={field.required}
-			bind:value={formData[field.name]}
-		/>
-	{/each}
-	<Button
-		title="+ Добавить ключевую задачу"
-		variant="outline"
-		onClick={openDialog}
+<div class="goal__conteiner">
+	<GoalForm
+		authorId={user.id}
+		{user}
+		tasks={draftTasks}
+		onSuccess={handleGoalSubmit}
+		onTaskCreate={handleTaskCreate}
 	/>
-</Form>
-
-<Dialog open={isDialogOpen} title="Новая задача" onClose={closeDialog}>
-	<Form onSubmit={handleSubmitForDialogForm} submitLabel="Сохранить задачу">
-		{#each fieldFormDialog as field}
-			<Input
-				name={field.name}
-				label={field.label}
-				type={field.type}
-				required={field.required}
-				bind:value={formData[field.name]}
-			/>
-		{/each}
-	</Form>
-</Dialog>
+	<TasksList />
+</div>
