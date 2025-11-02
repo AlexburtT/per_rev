@@ -1,4 +1,4 @@
-// src/routes/employee/+page.ts
+// src/routes/employee/+layout.ts
 import type { LayoutLoad } from "./$types";
 
 import { loadUserGoals, userStore } from "$lib/stores/userStore.svelte";
@@ -12,7 +12,7 @@ export const load: LayoutLoad = async () => {
 	}
 
 	// Загружаем цели — они нужны и на dashboard, и на /goals
-	const goals = loadUserGoals(user.id);
+	const goals = await loadUserGoals(user.id);
 
 	// Находим ФИО руководителя
 	const manager = user.managerId

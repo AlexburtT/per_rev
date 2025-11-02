@@ -59,11 +59,11 @@ export async function createGoal(goalData: Partial<Goal>) {
 }
 
 export async function updateGoal(updatedGoal: Goal) {
-	const savedGoal = await api.goals.saveGoal(updatedGoal);
+	await api.goals.saveGoal(updatedGoal); // возвращает void
 	userStore.goals = userStore.goals.map((g) =>
-		g.id === savedGoal.id ? savedGoal : g
+		g.id === updatedGoal.id ? updatedGoal : g
 	);
-	return savedGoal;
+	return updatedGoal;
 }
 
 export async function deleteGoal(goalId: string) {

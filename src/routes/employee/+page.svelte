@@ -3,12 +3,16 @@
 	import { userStore } from "$lib/stores/userStore.svelte.js";
 
 	let { data } = $props();
+
 	// Фильтруем цели
-	const activeGoals = userStore.goals.filter(
-		(g) => g.status === "draft" || g.status === "submitted"
+	const activeGoals = $derived(
+		userStore.goals.filter(
+			(g) => g.status === "draft" || g.status === "submitted"
+		)
 	);
-	const selfReviewGoals = userStore.goals.filter(
-		(g) => g.status === "self_reviewed"
+
+	const selfReviewGoals = $derived(
+		userStore.goals.filter((g) => g.status === "self_reviewed")
 	);
 </script>
 

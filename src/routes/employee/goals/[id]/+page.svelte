@@ -3,7 +3,7 @@
 	import * as api from "$lib/api";
 	import GoalDetail from "$lib/components/layouts/GoalDetail.svelte";
 	import GoalTaskCard from "$lib/components/layouts/GoalTaskCard.svelte";
-	import { userStore } from "$lib/stores/userStore.svelte";
+	import { updateGoal, userStore } from "$lib/stores/userStore.svelte";
 	import type { TaskData } from "$lib/types/forms";
 	import type { Goal } from "$lib/types/types";
 	import { mapTaskFormDataToEntity } from "$lib/utils/mapFormDataToEntry";
@@ -33,7 +33,8 @@
 				...goal,
 				taskIds: [...goal.taskIds, newTask.id],
 			};
-			await api.goals.saveGoal(updatedGoal);
+
+			await updateGoal(updatedGoal);
 
 			// 3. Обновляем локальное состояние (без перезагрузки!)
 			tasks = [...tasks, newTask];
@@ -98,7 +99,7 @@
 			status: "submitted",
 		};
 
-		await api.goals.saveGoal(updatedGoal);
+		await updateGoal(updatedGoal);
 		goal = updatedGoal;
 	};
 
@@ -118,7 +119,7 @@
 			...$state.snapshot(goal),
 			status: "self_reviewed",
 		};
-		await api.goals.saveGoal(updatedGoal);
+		await updateGoal(updatedGoal);
 		goal = updatedGoal;
 	};
 
