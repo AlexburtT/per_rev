@@ -15,16 +15,21 @@
 	const breadcrumbs = $derived(
 		/^\/employee\/goals\/[^/]+$/.test(hashPath)
 			? goalBreadcrumbs(goalTitle || "Новая цель")
-			: hashPath === "/employee/goals/new"
+			: /^\/employee\/self-review\/[^/]+$/.test(hashPath)
 				? [
-						...employeeBreadcrumbs("/employee/goals"),
-						{ title: "Новая цель" },
+						...employeeBreadcrumbs("/employee/self-review"),
+						{ title: "Анкета самооценки" },
 					]
-				: hashPath in EMPLOYEE_PAGES
-					? employeeBreadcrumbs(hashPath)
-					: hashPath === "/employee"
+				: hashPath === "/employee/goals/new"
+					? [
+							...employeeBreadcrumbs("/employee/goals"),
+							{ title: "Новая цель" },
+						]
+					: hashPath in EMPLOYEE_PAGES
 						? employeeBreadcrumbs(hashPath)
-						: []
+						: hashPath === "/employee"
+							? employeeBreadcrumbs(hashPath)
+							: []
 	);
 </script>
 

@@ -14,7 +14,7 @@ import type {
 } from "$lib/types/types";
 
 export const DB_NAME = "PerformanceReviewDB";
-export const DB_VERSION = 1;
+export const DB_VERSION = 2;
 
 export const STORES = {
 	USERS: "users",

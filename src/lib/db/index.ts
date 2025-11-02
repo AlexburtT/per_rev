@@ -97,6 +97,10 @@ export const selfReviewApi = {
 		);
 		return reviews.find((r) => r.cycleId === cycleId);
 	},
+
+	getByGoalId: (goalId: string) =>
+		getByIndex(STORES.SELF_REVIEWS, "byGoalId", goalId),
+
 	put: (review: SelfReview) => put(STORES.SELF_REVIEWS, review),
 };
 

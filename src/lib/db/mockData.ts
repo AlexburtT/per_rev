@@ -163,28 +163,5 @@ export async function initMockData() {
 		}
 	}
 
-	// === 6. Назначение оценок коллег (PeerAssignment) ===
-	for (const reviewer of employees) {
-		const possibleReviewees = employees.filter((e) => e.id !== reviewer.id);
-		if (possibleReviewees.length === 0) continue;
-
-		const numToReview = randomInt(2, Math.min(3, possibleReviewees.length));
-		const reviewees = [...possibleReviewees]
-			.sort(() => 0.5 - Math.random())
-			.slice(0, numToReview);
-
-		for (const reviewee of reviewees) {
-			const assignment: PeerAssignment = {
-				id: `pa-${reviewer.id}-${reviewee.id}`,
-				cycleId: cycle.id,
-				reviewerId: reviewer.id,
-				employeeId: reviewee.id,
-				status: "pending",
-				assignedAt: new Date().toISOString(),
-			};
-			await peerAssignmentApi.put(assignment);
-		}
-	}
-
 	console.log("[DB] ✅ Мок-данные успешно инициализированы!");
 }
