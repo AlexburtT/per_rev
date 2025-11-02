@@ -80,6 +80,10 @@ export const peerAssignmentApi = {
 		getByIndex(STORES.PEER_ASSIGNMENTS, "byEmployee", employeeId),
 	getByCycle: (cycleId: string) =>
 		getByIndex(STORES.PEER_ASSIGNMENTS, "byCycle", cycleId),
+	getById: async (id: string): Promise<PeerAssignment | undefined> => {
+		const all = await getAll(STORES.PEER_ASSIGNMENTS);
+		return all.find((item) => item.id === id);
+	},
 	put: (assignment: PeerAssignment) =>
 		put(STORES.PEER_ASSIGNMENTS, assignment),
 };
